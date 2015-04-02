@@ -1,0 +1,13 @@
+require "capistrano/deploy_mate_defaults"
+# NOTE: copy this file to /config/deploy.rb
+
+# Set app specific vars
+set :stages, %w(production prestage)
+set :default_stage, '<%= @stage_name %>'
+
+set :application, '<%= @app_name %>'
+set :repo_url, '<%= @repo_url %>'
+
+# Load default deploy tasks from submodule
+# NOTE: load this file AFTER app specific vars
+
