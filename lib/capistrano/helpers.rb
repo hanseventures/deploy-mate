@@ -13,7 +13,7 @@ def set_default(name, *args, &block)
 end
 
 def execute_script(name, params = "")
-  upload! "lib/capistrano/scripts/#{name}", "#{name}"
+  upload! File.expand_path("../scripts/#{name}", __FILE__), "#{name}"
   execute "chmod 755 #{name}"
   execute "./#{name} #{params}"
   execute "rm #{name}"

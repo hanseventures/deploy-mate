@@ -22,10 +22,14 @@ require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 
 # Load helper file
-import "lib/capistrano/helpers.rb"
-
-# Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
-Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
+require "capistrano/helpers.rb"
 
 # Load custom modules with helper functions
-Dir.glob('lib/capistrano/modules/*.rb').each { |r| load r }
+%w(aptitude bluepill upstart).each do |m|
+  load File.expand_path("../modules/#{m}.rb", __FILE__)
+end
+
+# Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
+%w(bluepill logrotate machine nginx rvm unicorn upstart).each do |t|
+  import File.expand_path("../tasks/#{t}.rake", __FILE__)
+end
