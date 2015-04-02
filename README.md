@@ -33,6 +33,13 @@ config/deploy.rb
 config/deploy/<your-stage>.rb
 ```
 
+## Updating the gem
+Should you need to update your `deploy_mate`-version (e.g. because somebody fixed a bug in the gem), run:
+```
+bundle update deploy_mate
+```
+This will bump you up to the latest repo-version.
+
 ## Setting up a server
 1. Spawn yourself a basic **Ubuntu 14** at the provider of your choice. 
 2. Create a working SSH-configuration for that server and try it our using `ssh <your-server-name>`
