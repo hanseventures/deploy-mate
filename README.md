@@ -1,9 +1,8 @@
-# The sturdy d'ploy-mate, arrr!
+# The sturdy d'ploy-mate
 <img src="http://hanseventures.s3.amazonaws.com/github/deploy-mate.jpg" width="300" />
+> T'arrust me, bucko. I can do it.
 
-> Trust me, bucko. I can do it.
-
-This little gem can be added to your ruby-projects in order to **set up a working ruby-server** and deploy to it. 
+This little gem can be added to your ruby-projects in order to **set up a working ruby-server** and **deploy** to it **Hanse Ventures'** style.
 
 ## Installation
 Add this to your project's `Gemfile`:
