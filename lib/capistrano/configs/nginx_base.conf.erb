@@ -1,0 +1,48 @@
+user www-data;
+worker_processes  2;
+
+error_log  /var/log/nginx/error.log;
+pid        /run/nginx.pid;
+
+events {
+  worker_connections  2048;
+}
+
+http {
+  include       /etc/nginx/mime.types;
+  default_type  application/octet-stream;
+
+  access_log /var/log/nginx/access.log;
+
+  sendfile on;
+  tcp_nopush on;
+  tcp_nodelay off;
+
+  keepalive_timeout  30;
+
+  gzip  on;
+  gzip_http_version 1.1;
+  gzip_comp_level 6;
+  gzip_proxied any;
+  gzip_types text/plain text/css text/xml text/javascript text/comma-separated-values
+             application/json application/x-javascript application/xml application/xml+rss;
+
+  # see http://blog.leetsoft.com/2007/7/25/nginx-gzip-ssl
+  gzip_buffers 16 8k;
+  gzip_disable "MSIE [1-6].(?!.*SV1)";
+
+  large_client_header_buffers 10 8k;
+
+  # SSL optimizations & session cache
+  # see http://auxbuss.com/blog/posts/2011_06_28_ssl_session_caching_on_nginx/
+  ssl_session_cache    shared:SSL:10m;
+  ssl_session_timeout  10m;
+  # SSL ciphers & protocols
+  # see http://www.hybridforge.com/blog/808/nginx/ssl-ciphers-pci-compliance/
+  ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers RC4:HIGH:!aNULL:!MD5:!kEDH;
+  ssl_prefer_server_ciphers on;
+
+  include /etc/nginx/conf.d/*.conf;
+  include /etc/nginx/sites-enabled/*;
+}

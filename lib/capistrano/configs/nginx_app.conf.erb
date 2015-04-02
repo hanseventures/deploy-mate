@@ -1,0 +1,44 @@
+upstream unicorn_upstream {
+  server unix:<%= shared_path %>/system/sockets/unicorn.sock;
+}
+
+server {
+  listen 80;
+  server_name <%= fetch(:nginx_server_name) %>;
+
+  client_max_body_size 10M;
+
+  # Logging
+  error_log  <%= shared_path %>/log/nginx_error.log;
+  access_log <%= shared_path %>/log/nginx_access.log;
+
+  # Location of our static files
+  root <%= current_path %>/public;
+
+  location @<%= fetch(:application) %> {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto http;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+
+    proxy_pass http://unicorn_upstream;
+    break;
+  }
+
+  location ~ ^/assets/ {
+    gzip_static on;
+    expires max;
+
+    add_header Cache-Control public;
+    add_header ETag "";
+
+    break;
+  }
+
+  error_page 500 502 503 504 /500.html;
+  location = /500.html {
+    root <%= current_path %>/public;
+  }
+
+  try_files /maintenance.html $uri $uri/index.html $uri.html @<%= fetch(:application) %>;
+}

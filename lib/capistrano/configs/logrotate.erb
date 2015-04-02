@@ -1,0 +1,22 @@
+<%= shared_path %>/log/*.log {
+        size 300M
+        missingok
+        rotate 5
+        compress
+        delaycompress
+        notifempty
+        create 755 ubuntu www-data
+        sharedscripts
+        su ubuntu www-data
+        prerotate
+                if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+                        run-parts /etc/logrotate.d/httpd-prerotate; \
+                fi; \
+        endscript
+        postrotate
+                [ ! -f /var/run/nginx.pid ] || kill -USR1 `cat /var/run/nginx.pid`
+        endscript
+        lastaction
+                [ ! -f <%= shared_path %>/system/pids/unicorn.pid ] || kill -USR1 `cat <%= shared_path %>/system/pids/unicorn.pid`
+        endscript
+}

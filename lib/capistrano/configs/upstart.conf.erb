@@ -1,0 +1,9 @@
+description "Bluepill"
+
+start on runlevel [2]
+stop on runlevel [016]
+
+expect daemon
+exec /home/ubuntu/.rvm/wrappers/default/bluepill load <%= shared_path %>/config/unicorn.pill
+
+respawn
