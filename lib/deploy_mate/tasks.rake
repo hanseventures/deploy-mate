@@ -36,6 +36,8 @@ namespace :deploy_mate do
     puts "Aye!"
     puts "Worrrrking..."
 
+    template("Capfile.erb", "Capfile")
+    sleep 1
     template("deploy.rb.erb", "config/deploy.rb")
     sleep 1
     FileUtils.mkdir_p("config/deploy") unless File.exists?("config/deploy")
