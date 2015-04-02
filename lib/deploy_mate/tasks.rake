@@ -36,12 +36,12 @@ namespace :deploy_mate do
     puts "Aye!"
     puts "Worrrrking..."
 
-    template("Capfile.erb", "Capfile")
+    config_template("Capfile.erb", "Capfile")
     sleep 1
-    template("deploy.rb.erb", "config/deploy.rb")
+    config_template("deploy.rb.erb", "config/deploy.rb")
     sleep 1
     FileUtils.mkdir_p("config/deploy") unless File.exists?("config/deploy")
-    template("deploy/stage.rb.erb", "config/deploy/#{@stage_name}.rb")
+    config_template("deploy/stage.rb.erb", "config/deploy/#{@stage_name}.rb")
     sleep 1
 
     puts "Arr, be dun working!"
@@ -49,7 +49,7 @@ namespace :deploy_mate do
 
 end
 
-def template(from, to)
+def config_template(from, to)
   erb = File.read(File.expand_path("../templates/#{from}", __FILE__))
   compiled = ERB.new(erb).result(binding)
   File.open(to, "wb") { |f| f.write(compiled) }
