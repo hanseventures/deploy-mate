@@ -1,5 +1,13 @@
 namespace :deploy_mate do
 
+  task :rails do |t,args|
+    if defined? Rails
+      puts "rails present"
+    else
+      puts "rails not present"
+    end
+  end
+
   desc 'Installs the needed capistrano files to deploy with the mate.'
   task :install do |t,args|
     puts deploy_mate_face
