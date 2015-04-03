@@ -7,7 +7,7 @@ ENV["RACK_ENV"] = "<%= fetch(:environment) %>"
 shared_path = "<%= shared_path %>"
 current_path = "<%= current_path %>"
 
-Bluepill.application("pay-with-a-tweet", :log_file => "#{shared_path}/log/bluepill.log") do |app|
+Bluepill.application("<%= fetch(:application) %>", :log_file => "#{shared_path}/log/bluepill.log") do |app|
 
   app.working_dir = current_path
   app.uid = 'ubuntu'
