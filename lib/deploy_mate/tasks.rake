@@ -14,7 +14,7 @@ namespace :deploy_mate do
     @stage_name = ask("Give your firrst stage a name:", "prestage")
     @ssh_name = ask("Houw can I rreach the server with SSH:", "#{@app_name}-#{@stage_name}")
     @branch_name = ask("Which brrranch does '#{@stage_name}' d'ploy frem:", "dev")
-    @hostname = ask("Give '#{@stage_name}' a host-name (for nginx):", "#{@stage_name}.#{@app_name}.com")
+    @host_name = ask("Give '#{@stage_name}' a host-name (for nginx):", "#{@stage_name}.#{@app_name}.com")
     @environment = ask("What is the name of #{@stage_name}'s environment:", "#{@stage_name}")
 
     puts "Aye!"
