@@ -2,7 +2,7 @@ require "capistrano/deploy_mate_defaults"
 # NOTE: copy this file to /config/deploy.rb
 
 # Set app specific vars
-set :stages, %w(production prestage)
+set :stages, %w(<%= @stage_name %>)
 set :default_stage, '<%= @stage_name %>'
 
 set :application, '<%= @app_name %>'

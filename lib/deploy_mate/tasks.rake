@@ -1,46 +1,21 @@
-namespace :deploy_mate do
+require 'readline'
 
-  desc 'Check rails present?'
-  task :rails do |t,args|
-    if defined? Rails
-      puts "rails present"
-    else
-      puts "rails not present"
-    end
-  end
+namespace :deploy_mate do
 
   desc 'Installs the needed capistrano files to deploy with the mate.'
   task :install do |t,args|
-    puts deploy_mate_face
-    puts "Greetings, landlubber!"
+    puts "Greetings, landlubber! I'm your DEPLOY_MATE."
     puts "We be setting up yer d'ployment now."
-    print "Give yer application a name: [application] "
-    @app_name = STDIN.gets.strip
-    @app_name = "application" if @app_name.blank?
 
-    print "Give your firrst stage a name: [prestage] "
-    @stage_name = STDIN.gets.strip
-    @stage_name = "prestage" if @stage_name.blank?
+    @app_name = ask("Name (for nginx, servers, etc.):", guess_app_name)
+    @repo_url = ask("Location of yer git-repo:", "git@github.com:hanseventures/#{@app_name}.git")
+    @is_rails = yes_or_no?("Is this a RAILS project", (rails_present? ? "yes" : "no"))
 
-    print "Houw can I rreach the server with SSH: [#{@app_name}-#{@stage_name}] "
-    @ssh_name = STDIN.gets.strip
-    @ssh_name = "#{@app_name}-#{@stage_name}" if @ssh_name.blank?
-
-    print "Where does th'code come frem: [git@github.com:hanseventures/#{@app_name}.git] "
-    @repo_url = STDIN.gets.strip
-    @repo_url = "git@github.com:hanseventures/#{@app_name}.git" if @repo_url.blank?
-
-    print "Which brrranch does '#{@stage_name}' d'ploy frem: [dev] "
-    @branch_name = STDIN.gets.strip
-    @branch_name = "dev" if @branch_name.blank?
-
-    print "Whats the name of #{@stage_name}'s rails-environment: [prestage] "
-    @rails_env = STDIN.gets.strip
-    @rails_env = "prestage" if @rails_env.blank?
-
-    print "Now give of '#{@stage_name}' a host-name: [dev.#{@app_name}.com] "
-    @host_name = STDIN.gets.strip
-    @host_name = "dev.#{@app_name}.com" if @host_name.blank?
+    @stage_name = ask("Give your firrst stage a name:", "prestage")
+    @ssh_name = ask("Houw can I rreach the server with SSH:", "#{@app_name}-#{@stage_name}")
+    @branch_name = ask("Which brrranch does '#{@stage_name}' d'ploy frem:", "dev")
+    @hostname = ask("Give '#{@stage_name}' a host-name (for nginx):", "#{@stage_name}.#{@app_name}.com")
+    @environment = ask("What is the name of #{@stage_name}'s environment:", "#{@stage_name}")
 
     puts "Aye!"
     puts "Worrrrking..."
@@ -65,43 +40,29 @@ def config_template(from, to)
   puts "'#{to}'"
 end
 
-def deploy_mate_face
-<<-EOS
+def rails_present?
+  defined? Rails
+end
 
-                       ZMMMMMMM.                            
-               ..MMMMMMMMMMMM .                             
-             MMMMIIIIMMMM$IIIMMMM.                          
-           MMMI7$$$$MMMDNMM:MMDIMMM                         
-        .MMMNZ$$$$$MMMMM=:~~~~~NNIIMN.                      
-   .   MMN$$$$$$$$NMM:MMN.,MMM:=~M$INMD                     
-MMMMMMMM$ZZZZ8MMMMM~M.,., .....M~~M$$IMM,                   
-MMMMMMMMMMMN::~MN7~M...........,M~MNN$$ZM$.                 
-MMMM~~~~~MON:,:O~~M.......,......M~M$ZM$IMM,                
- .M78MMMM7~:~~~~~=M.....MN7M....,M:MMDZ7NIMM                
- ,MM,. ...DMM::~~:M,...MIZM.IM...M~O7MMM$M$MM .             
-.MM........Z~:~~~~M:...8DMM$OM...M~~IMZ$MZNMMMMM.MMMMMMN.   
-MM........,M::~~~~M:::,M7O88M,..ND~~:IM$7MM~~~:MMMII$7INMN  
-MM.....MM..M:~~~~~:M::::....:::,M:~~~7IN7M::M~~~MMMNMMM7$MM 
-MM.....MMN.MM,:::~~~M:~,::::::MM~~N~~+~~7I~M==:~MZZZ$$$$MM. 
-.M=.......MD:::::?=~MM8MMMMMMM~~MM~~:::~~:~,M~~:MZZZZZMMM.  
-.MM=::::::M~~~~++~:~~~~~,MM==~MD=:~,,:::~~~~M~:MDZZMM?MMM   
-  M+NMMMMMNMO~~~~~~:MM:~~M=MMM~~:~~~~~~:~+~~~M+MMZDMMMZIMM. 
- .M:~:NM:...M======+==M~::M:,,OM,~~~~~~~~=M=NMM=NMMZZZ$$MM  
-.?MMIZNM...:MMI==DM+==~~~=M:..?M~~~.,::~~=MIM=M?=M..,MMMM,. 
-IMM:.:MM+,,+MMMMMMMMM?+==M:,, DM~~:~+MM.~=M?7N+ZM
-.MN:.:MMM+:,:::::::::,::~MMMMMMMMMMMM:~~~~:M?$?M.
- .MMM+,::~~~~~~~~~~~~~~~~~~:::::::~~~~~~M==N....
- MM::~~~~~~=======~~~~~~~~~~~~~~~~~~~~O=~N?M.
- M~~~~===MMMMM$?$DO===~~~~~~~~~~~~~~~~~~=+M.                
- MM~==+~:~MM~::::~:,,~~~~~~~~~~~~~~~~~~=MM$.                
- MM=+=~:::~:~:::::,,,,::::::::~~~~~~~=+=M.                  
- MM===~~~~~~~~:::::::~~~~~::::::O~M=M=IM                    
- MM==~~~~~~~::::~~~~~~~~~~~~~~:Z~$~8~MZ.                    
- MM=+===~~::::~~~~~~~~~~~~~==+===::ZM                       
- .M+~===+:~:::::::::::::~~++=?~~~M8.                        
-  $M++$+::+:I:~~~~~~~~~:~~:~=:ZO,.                          
-   .MM=~7:===:~::NNZZZMMZ+ZZM                               
-     .MZZMMMMZ$..       .                                   
-        ..            
-EOS
+def guess_app_name
+  Dir.pwd.split(File::SEPARATOR).last
+end
+
+def yes_or_no?(prompt, default = nil)
+  answer = "undefined"
+  while(!["yes", "no"].include?(answer))
+    answer = ask("#{prompt} [yes/no]:", (default == "yes" ? "yes" : "no"))
+  end
+  answer
+end
+
+def ask(prompt, default = nil)
+  if default
+    Readline.pre_input_hook = -> {
+      Readline.insert_text(default)
+      Readline.redisplay
+    }
+  end
+  data = Readline.readline("#{prompt}: ")
+  return data.chomp
 end

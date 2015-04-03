@@ -24,7 +24,7 @@ before_fork do |server, worker|
     end
   end
 end
-<% if $deploy_mate_rails %>
+<% if fetch(:rails_env) %>
 after_fork do |server,worker|
   ActiveRecord::Base.establish_connection
 end
