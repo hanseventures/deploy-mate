@@ -53,7 +53,7 @@ def yes_or_no?(prompt, default = nil)
   while(!["yes", "no"].include?(answer))
     answer = ask("#{prompt} [yes/no]:", (default == "yes" ? "yes" : "no"))
   end
-  answer
+  (answer == "yes")
 end
 
 def ask(prompt, default = nil)
