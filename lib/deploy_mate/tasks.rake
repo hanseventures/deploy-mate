@@ -1,5 +1,6 @@
 namespace :deploy_mate do
 
+  desc 'Check rails present?'
   task :rails do |t,args|
     if defined? Rails
       puts "rails present"
