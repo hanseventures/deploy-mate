@@ -32,6 +32,7 @@ Capfile
 config/deploy.rb
 config/deploy/<your-stage>.rb
 ```
+When done: **Remove** `load 'deploy_mate/tasks.rake'` from your `Rakefile`. It is not needed anymore and will otherwise only cause problems.
 
 ## Updating the gem
 Should you need to update your `deploy_mate`-version (e.g. because somebody fixed a bug in the gem), run:
