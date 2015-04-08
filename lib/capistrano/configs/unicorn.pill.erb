@@ -1,9 +1,3 @@
-<% if fetch(:rails_env) %>
-ENV["RAILS_ENV"] = "<%= fetch(:rails_env) %>"
-<% else %>
-ENV["RACK_ENV"] = "<%= fetch(:environment) %>"
-<% end %>
-
 shared_path = "<%= shared_path %>"
 current_path = "<%= current_path %>"
 
@@ -14,8 +8,9 @@ Bluepill.application("<%= fetch(:application) %>", :log_file => "#{shared_path}/
   app.gid = 'www-data'
   app.process("unicorn") do |process|
     process.pid_file = "#{shared_path}/system/pids/unicorn.pid"
+    process.environment = { 'BUNDLE_GEMFILE' => "#{current_path}/Gemfile" }
 
-    process.start_command = "/home/ubuntu/.rvm/wrappers/default/bundle exec unicorn -c #{shared_path}/config/unicorn.rb -E <%= (fetch(:rails_env) || fetch(:environment)) %> -D"
+    process.start_command = "/home/ubuntu/.rvm/wrappers/default/bundle exec unicorn -c #{shared_path}/config/unicorn.rb -E <%= fetch(:environment) %> -D"
     process.stop_command = "kill -QUIT {{PID}}"
     process.restart_command = "kill -USR2 {{PID}}"
 

@@ -3,9 +3,5 @@ server "<%= @ssh_name %>", roles: [:app, :web, :db], :primary => true
 set :unicorn_workers, "2"
 set :nginx_server_name, "<%= @host_name %>"
 
-<% if @is_rails %>
-set :rails_env, "<%= @environment %>"
-<% else %>
 set :environment, "<%= @environment %>"
-<% end %>
 set :branch, "<%= @branch_name %>"

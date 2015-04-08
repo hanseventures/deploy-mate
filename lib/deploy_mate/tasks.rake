@@ -4,18 +4,18 @@ namespace :deploy_mate do
 
   desc 'Installs the needed capistrano files to deploy with the mate.'
   task :install do |t,args|
-    puts "Greetings, landlubber! I'm your DEPLOY_MATE."
-    puts "We be setting up yer d'ployment now."
+    puts "I'm your DEPLOY_MATE."
+    puts "We will setting up your deployment now."
 
-    @app_name = ask("Name (for nginx, servers, etc.):", guess_app_name)
-    @repo_url = ask("Location of yer git-repo:", "git@github.com:hanseventures/#{@app_name}.git")
-    @is_rails = yes_or_no?("Is this a RAILS project", (rails_present? ? "yes" : "no"))
+    @app_name = ask("App-Name (for nginx, servers, etc.):", guess_app_name)
+    @repo_url = ask("Url-Location of git-repo:", "git@github.com:hanseventures/#{@app_name}.git")
+    @is_rails = yes_or_no?("Is this a RAILS project ?", (rails_present? ? "yes" : "no"))
 
-    @stage_name = ask("Give your firrst stage a name:", "prestage")
-    @ssh_name = ask("Houw can I rreach the server with SSH:", "#{@app_name}-#{@stage_name}")
-    @branch_name = ask("Which brrranch does '#{@stage_name}' d'ploy frem:", "dev")
-    @host_name = ask("Give '#{@stage_name}' a host-name (for nginx):", "#{@stage_name}.#{@app_name}.com")
-    @environment = ask("What is the name of #{@stage_name}'s environment:", "#{@stage_name}")
+    @stage_name = ask("Give the first stage a name:", "prestage")
+    @ssh_name = ask("SSH-Hostname for the server:", "#{@app_name}-#{@stage_name}")
+    @branch_name = ask("Branch to deploy '#{@stage_name}' from:", "dev")
+    @host_name = ask("Web-URL for '#{@stage_name}':", "#{@stage_name}.#{@app_name}.com")
+    @environment = ask("#{@stage_name}'s environment (RACK_ENV/RAILS_ENV):", "#{@stage_name}")
 
     puts "Aye!"
     puts "Worrrrking..."
