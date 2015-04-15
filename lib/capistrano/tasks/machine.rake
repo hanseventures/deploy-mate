@@ -17,6 +17,7 @@ namespace :machine do
       invoke "machine:install:set_defaults"
       invoke "machine:install:bluepill"
       invoke "machine:install:bundler"
+      invoke "machine:install:nodejs"
       invoke "machine:install:mysql_dev"
     end 
   end
@@ -84,6 +85,12 @@ namespace :machine do
     task :htop do
       on roles(:app) do
         apt_get_install("htop") unless is_package_installed?("htop")
+      end
+    end
+
+    task :nodejs do
+      on roles(:app) do
+        apt_get_install("nodejs") unless is_package_installed?("nodejs")
       end
     end
 
