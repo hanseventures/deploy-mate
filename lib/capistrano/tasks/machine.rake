@@ -16,6 +16,7 @@ namespace :machine do
       invoke "machine:install:ruby"
       invoke "machine:install:set_defaults"
       invoke "machine:install:bluepill"
+      invoke "machine:install:bundler"
       invoke "machine:install:mysql_dev"
     end 
   end
@@ -52,6 +53,13 @@ namespace :machine do
       end
     end
     before :ruby, 'rvm:hook'
+
+    task :bundler do
+      on roles(:app) do
+        execute :rvmsudo, :gem, :install, :bundler
+      end
+    end
+    before :bundler, 'rvm:hook'
 
     task :bluepill do
       on roles(:app) do
