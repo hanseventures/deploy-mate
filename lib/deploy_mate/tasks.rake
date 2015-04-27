@@ -16,6 +16,7 @@ namespace :deploy_mate do
     @branch_name = ask("Branch to deploy '#{@stage_name}' from:", "dev")
     @host_name = ask("Web-URL for '#{@stage_name}':", "#{@stage_name}.#{@app_name}.com")
     @environment = ask("#{@stage_name}'s environment (RACK_ENV/RAILS_ENV):", "#{@stage_name}")
+    @db_engine = ask_until("What db are you using?", %w( postgresql mysql ), "mysql")
 
     puts "Aye!"
     puts "Worrrrking..."
@@ -54,6 +55,13 @@ def yes_or_no?(prompt, default = nil)
     answer = ask("#{prompt} [yes/no]:", (default == "yes" ? "yes" : "no"))
   end
   (answer == "yes")
+end
+
+def ask_until(prompt, answers, default)
+  begin
+    answer = ask("#{prompt} (#{answers.join(', ')})", default).downcase
+  end until answers.include? answer
+  answer
 end
 
 def ask(prompt, default = nil)
