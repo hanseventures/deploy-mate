@@ -9,7 +9,7 @@ set :rvm_ruby_version, "ruby-2.2.0"
 set :rvm_map_bins, %w{gem rake ruby rvmsudo bundle}
 
 set :deploy_to, "/srv/#{fetch(:application)}"
-set :linked_dirs, %w{bin log vendor/bundle system/pids system/sockets public/assets}
+set :linked_dirs, %w{log vendor/bundle system/pids system/sockets public/assets}
 
 set :keep_releases, 3
 set :ssh_options, { forward_agent: true }
