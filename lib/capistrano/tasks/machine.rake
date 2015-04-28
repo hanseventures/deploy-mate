@@ -18,8 +18,9 @@ namespace :machine do
       invoke "machine:install:bluepill"
       invoke "machine:install:bundler"
       invoke "machine:install:nodejs"
-      invoke "machine:install:mysql_dev"
-    end 
+      invoke "machine:install:mysql_dev" if fetch(:db_engine) == "mysql"
+      invoke "machine:install:postgres_dev" if fetch(:db_engine) == "postgresql"
+    end
   end
 
   desc "Install configs"
@@ -79,6 +80,13 @@ namespace :machine do
     task :mysql_dev do
       on roles(:app) do
         apt_get_install("libmysqlclient-dev") unless is_package_installed?("libmysqlclient-dev")
+      end
+    end
+
+    task :postgres_dev do
+      on roles(:app) do
+        apt_get_install("libpq-dev") unless is_package_installed?("libpq-dev")
+        apt_get_install("postgresql-client") unless is_package_installed?("postgresql-client")
       end
     end
 
