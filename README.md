@@ -4,6 +4,10 @@
 
 This little gem can be added to your ruby-projects in order to **set up a working ruby-server** and **deploy** to it **Hanse Ventures'** style.
 
+## Changelog
+* **2015-04-29**: Load custom rake tasks from lib/capistrano/tasks directory.
+You need to run the generator ```rake deploy_mate:install``` again or add ```Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }``` to your Capfile.
+
 ## Installation
 Add this to your project's `Gemfile`:
 
@@ -14,11 +18,11 @@ and run `bundle install`.
 
 After installing the gem you need to generate the files needed to be able to deploy with **capistrano**.
 
-Add this at **the end** of your project's `Rakefile`: 
+Add this at **the end** of your project's `Rakefile`:
 ```
 load 'deploy_mate/tasks.rake'
 ```
-then run 
+then run
 ```
 rake deploy_mate:install
 ````
@@ -42,8 +46,8 @@ bundle update deploy_mate
 This will bump you up to the latest repo-version.
 
 ## Setting up a server
-1. Spawn yourself a basic **Ubuntu 14** at the provider of your choice. 
+1. Spawn yourself a basic **Ubuntu 14** at the provider of your choice.
 2. Create a working SSH-configuration for that server and try it our using `ssh <your-server-name>`
-3. Run `cap <your-stage> machine:init` to install the needed packages. 
+3. Run `cap <your-stage> machine:init` to install the needed packages.
 4. Run `cap <your-stage> machine:setup` the setup all needed configuration-files on the server
 5. Run `cap <your-stage> deploy` and be done.
