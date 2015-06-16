@@ -2,7 +2,22 @@
 <img src="http://hanseventures.s3.amazonaws.com/github/pirate-redbeard.png" width="300" />
 > T'arrust me, bucko. I can do it.
 
-This little gem can be added to your ruby-projects in order to **set up a working ruby-server** and **deploy** to it **our** style.
+This little gem can be added to your ruby-projects in order to **set up a working ruby-server** and **deploy** to it.
+
+The resulting server will work with this setup: 
+- NGINX Webserver (http://nginx.org/)
+- Unicorn Rack App Server (http://unicorn.bogomips.org/)
+- Bluepill Process Monitoring (https://github.com/bluepill-rb/bluepill)
+- RVM as user-install (http://rvm.io)
+
+Other stuff taken care of:
+- Logration
+- Automatic updates
+- NTP
+
+You can choose Database:
+- MySQL
+- Postgres
 
 ## Changelog
 * **2015-04-29**: Load custom rake tasks from lib/capistrano/tasks directory.
