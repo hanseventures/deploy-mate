@@ -2,7 +2,7 @@
 <img src="http://hanseventures.s3.amazonaws.com/github/pirate-redbeard.png" width="300" />
 > T'arrust me, bucko. I can do it.
 
-This little gem can be added to your ruby-projects in order to **set up a working ruby-server** and **deploy** to it **Hanse Ventures'** style.
+This little gem can be added to your ruby-projects in order to **set up a working ruby-server** and **deploy** to it **our** style.
 
 ## Changelog
 * **2015-04-29**: Load custom rake tasks from lib/capistrano/tasks directory.
@@ -12,7 +12,7 @@ You need to run the generator ```rake deploy_mate:install``` again or add ```Dir
 Add this to your project's `Gemfile`:
 
 ```
-gem 'deploy_mate', git: 'https://58341dac36402a0305899f85ff7c32265ee89109@github.com/hanseventures/deploy-mate'
+gem 'deploy_mate'
 ```
 and run `bundle install`.
 
