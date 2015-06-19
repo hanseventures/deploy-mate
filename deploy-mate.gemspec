@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name                      = "deploy_mate"
-  s.version                   = "0.1"
+  s.version                   = "0.11"
 
   s.authors                   = ["Tim Adler"]
   s.date                      = %q{2015-04-02}
