@@ -53,7 +53,7 @@ end
 def guess_ruby_version
   ruby_version = nil
   ruby_version = cat_file(".ruby-version")
-  ruby_version.replace!('\n', "") if ruby_version
+  ruby_version.gsub!('\n', "") if ruby_version
   unless ruby_version
     gem_file_content = cat_file("Gemfile")
     if gem_file_content
