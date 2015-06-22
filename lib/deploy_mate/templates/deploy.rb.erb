@@ -3,6 +3,8 @@ set :application, '<%= @app_name %>'
 
 require "capistrano/deploy_mate_defaults"
 
+set :rvm_ruby_version, '<%= @ruby_version %>'
+
 # Set app specific vars
 set :stages, %w(<%= @stage_name %>)
 set :default_stage, '<%= @stage_name %>'
