@@ -7,6 +7,7 @@ namespace :deploy_mate do
     puts "I'm your DEPLOY_MATE."
     puts "We will setting up your deployment now."
 
+    @ruby_version = ask("Ruby-Version (the RVM-way, e.g. ruby-2.2.0):", guess_ruby_version)
     @app_name = ask("App-Name (for nginx, servers, etc.):", guess_app_name)
     @repo_url = ask("Url-Location of git-repo:", "git@github.com:hanseventures/#{@app_name}.git")
     @is_rails = yes_or_no?("Is this a RAILS project ?", (rails_present? ? "yes" : "no"))
@@ -14,7 +15,7 @@ namespace :deploy_mate do
     @stage_name = ask("Give the first stage a name:", "prestage")
     @ssh_name = ask("SSH-Hostname for the server:", "#{@app_name}-#{@stage_name}")
     @branch_name = ask("Branch to deploy '#{@stage_name}' from:", "dev")
-    @host_name = ask("Web-URL for '#{@stage_name}':", "#{@stage_name}.#{@app_name}.com")
+    @host_name = ask("Web-URL for '#{@stage_name}':", "#{@stage_name}.#{@app_name}")
     @environment = ask("#{@stage_name}'s environment (RACK_ENV/RAILS_ENV):", "#{@stage_name}")
     @db_engine = ask_until("What db are you using?", %w( postgresql mysql ), "mysql")
 
@@ -49,6 +50,22 @@ def guess_app_name
   Dir.pwd.split(File::SEPARATOR).last
 end
 
+def guess_ruby_version
+  ruby_version = nil
+  ruby_version = cat_file(".ruby-version")
+  ruby_version.replace!('\n', "") if ruby_version
+  unless ruby_version
+    gem_file_content = cat_file("Gemfile")
+    if gem_file_content
+      match =  gem_file_content.match("^ruby '(?<version>[0-9.]*)'")
+      if match
+        ruby_version = "ruby-" + match["version"]
+      end
+    end
+  end
+  ruby_version
+end
+
 def yes_or_no?(prompt, default = nil)
   answer = "undefined"
   while(!["yes", "no"].include?(answer))
@@ -73,4 +90,8 @@ def ask(prompt, default = nil)
   end
   data = Readline.readline("#{prompt}: ")
   return data.chomp
+end
+
+def cat_file(filename)
+  File.open(filename, 'rb') { |f| f.read } if File.exist?(filename)
 end
