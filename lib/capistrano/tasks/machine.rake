@@ -1,5 +1,6 @@
 namespace :machine do
   include Aptitude
+  include UserManagement
 
   desc "Sets up a blank Ubuntu to run our Rails-setup"
   task :init do
@@ -20,6 +21,26 @@ namespace :machine do
       invoke "machine:install:nodejs"
       invoke "machine:install:mysql_dev" if fetch(:db_engine) == "mysql"
       invoke "machine:install:postgres_dev" if fetch(:db_engine) == "postgresql"
+    end
+  end
+  before "machine:init", "machine:check_ubuntu_user"
+  before "deploy", "machine:check_ubuntu_user"
+
+  desc "Check if we are doing things as the correct user"
+  task :check_ubuntu_user do
+    on roles(:app) do
+      unless am_i?("ubuntu")
+        invoke "machine:create_ubuntu_user"
+        error "Please use a use a user named 'ubuntu' to login to the machine."
+        fail
+      end
+    end
+  end
+
+  desc "Creates an Amazon AWS-style 'ubuntu'-user on machines with only 'root'"
+  task :create_ubuntu_user do
+    on roles(:app) do
+      execute_script("create_ubuntu_user.sh")
     end
   end
 

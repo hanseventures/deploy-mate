@@ -20,6 +20,7 @@ You can choose Database:
 - Postgres
 
 ## Changelog
+* **2015-06-23**: Support creation of working `ubuntu` user. Error out if another user than `ubuntu` is used.
 * **2015-06-22**: Support for choosing your Ruby-version when creating the `Capfile`. Suggestions come from `.ruby-version` and `Gemfile`.
 * **2015-04-29**: Load custom rake tasks from lib/capistrano/tasks directory.
 You need to run the generator ```rake deploy_mate:install``` again or add ```Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }``` to your Capfile.
