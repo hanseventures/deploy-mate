@@ -22,6 +22,7 @@ You can choose a Database-Engine:
 **If you are not using Amazon AWS as a host:** The GEM needs a working Amazon AWS-style `ubuntu`-user on the system in order to work properly. It will create one, if needed.
 
 ## Changelog
+* **2015-06-23**: Support for optional `imagemagick`
 * **2015-06-23**: Support creation of working `ubuntu` user. Error out if another user than `ubuntu` is used.
 * **2015-06-22**: Support for choosing your Ruby-version when creating the `Capfile`. Suggestions come from `.ruby-version` and `Gemfile`.
 * **2015-04-29**: Load custom rake tasks from lib/capistrano/tasks directory.
