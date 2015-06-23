@@ -19,6 +19,7 @@ namespace :machine do
       invoke "machine:install:bluepill"
       invoke "machine:install:bundler"
       invoke "machine:install:nodejs"
+      invoke "machine:install:imagemagick" if fetch(:imagemagick)
       invoke "machine:install:mysql_dev" if fetch(:db_engine) == "mysql"
       invoke "machine:install:postgres_dev" if fetch(:db_engine) == "postgresql"
     end
@@ -95,6 +96,12 @@ namespace :machine do
     task :rvm do
       on roles(:app) do
         execute_script("install_rvm.sh")
+      end
+    end
+
+    task :imagemagick do
+      on roles(:app) do
+        apt_get_install("imagemagick") unless is_package_installed?("imagemagick")
       end
     end
 

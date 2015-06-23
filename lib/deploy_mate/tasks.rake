@@ -11,6 +11,7 @@ namespace :deploy_mate do
     @app_name = ask("App-Name (for nginx, servers, etc.)", guess_app_name)
     @repo_url = ask("Url-Location of git-repo", "git@github.com:hanseventures/#{@app_name}.git")
     @is_rails = yes_or_no?("Is this a RAILS project ?", (rails_present? ? "yes" : "no"))
+    @needs_imagemagick = yes_or_no?("Does this project need ImageMagick ?", (needs_imagemagick? ? "yes" : "no"))
 
     @stage_name = ask("Give the first stage a name", "prestage")
     @ssh_name = ask("SSH-Hostname for the server", "#{@app_name}-#{@stage_name}")
@@ -40,6 +41,10 @@ def config_template(from, to)
   compiled = ERB.new(erb).result(binding)
   File.open(to, "wb") { |f| f.write(compiled) }
   puts "'#{to}'"
+end
+
+def needs_imagemagick?
+  defined? RMagick || defined? MiniMagick
 end
 
 def rails_present?
