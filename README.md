@@ -23,11 +23,13 @@ You can choose a Database-Engine:
 **If you are not using Amazon AWS as a host:** The GEM needs a working Amazon AWS-style `ubuntu`-user on the system in order to work properly. It will create one, if needed.
 
 It uses the following Capistrano-roles to divide the installed components:
-- **web**: Everything regarding NGINX
-- **app**: Everything needed to run the Ruby-webapp
-- **cronjobs**: [OPTION] For environments where `whenever` should manage/run cronjobs
+- **web**: Machines with this role run NGINX as proxy
+- **app**: Machines with this role run the Ruby-webapp
+- **search**: [OPTIONAL] Machines with this role run ElasticSearch
+- **cronjobs**: [OPTIONAL] For environments where `whenever` should manage/run cronjobs
 
 ## Changelog
+* **2015-06-23**: Support for optional ElasticSearch
 * **2015-06-23**: Support for optional `whenever`
 * **2015-06-23**: Support for optional `imagemagick`
 * **2015-06-23**: Support creation of working `ubuntu` user. Error out if another user than `ubuntu` is used.

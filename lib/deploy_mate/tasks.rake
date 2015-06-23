@@ -7,18 +7,19 @@ namespace :deploy_mate do
     puts "I'm your DEPLOY_MATE."
     puts "We will setting up your deployment now."
 
-    @ruby_version = ask("[01/11] Ruby-Version (the RVM-way, e.g. ruby-2.2.0)", guess_ruby_version)
-    @app_name = ask("[02/11] App-Name (for nginx, servers, etc.)", guess_app_name)
-    @repo_url = ask("[03/11] Url-Location of git-repo", "git@github.com:hanseventures/#{@app_name}.git")
-    @is_rails = yes_or_no?("[04/11] Is this a RAILS project ?", (rails_present? ? "yes" : "no"))
-    @needs_imagemagick = yes_or_no?("[05/11] Does this project need ImageMagick ?", (needs_imagemagick? ? "yes" : "no"))
+    @ruby_version = ask("[01/12] Ruby-Version (the RVM-way, e.g. ruby-2.2.0)", guess_ruby_version)
+    @app_name = ask("[02/12] App-Name (for nginx, servers, etc.)", guess_app_name)
+    @repo_url = ask("[03/12] Url-Location of git-repo", "git@github.com:hanseventures/#{@app_name}.git")
+    @is_rails = yes_or_no?("[04/12] Is this a RAILS project ?", (rails_present? ? "yes" : "no"))
+    @needs_imagemagick = yes_or_no?("[05/12] Does this project need ImageMagick ?", (needs_imagemagick? ? "yes" : "no"))
 
-    @stage_name = ask("[06/11] Give the first stage a name", "prestage")
-    @ssh_name = ask("[07/11] SSH-Hostname for the server", "#{@app_name}-#{@stage_name}")
-    @branch_name = ask("[08/11] Branch to deploy '#{@stage_name}' from", "dev")
-    @host_name = ask("[09/11] Web-URL for '#{@stage_name}'", "#{@stage_name}.#{@app_name}")
-    @environment = ask("[10/11] #{@stage_name}'s environment (RACK_ENV/RAILS_ENV)", "#{@stage_name}")
-    @db_engine = ask_until("[11/11] What db are you using?", %w( postgresql mysql ), "mysql")
+    @stage_name = ask("[06/12] Give the first stage a name", "prestage")
+    @ssh_name = ask("[07/12] SSH-Hostname for the server", "#{@app_name}-#{@stage_name}")
+    @branch_name = ask("[08/12] Branch to deploy '#{@stage_name}' from", "dev")
+    @host_name = ask("[09/12] Web-URL for '#{@stage_name}'", "#{@stage_name}.#{@app_name}")
+    @environment = ask("[10/12] #{@stage_name}'s environment (RACK_ENV/RAILS_ENV)", "#{@stage_name}")
+    @db_engine = ask_until("[11/12] What db are you using?", %w( postgresql mysql ), "mysql")
+    @needs_elasticsearch = yes_or_no?("[12/12] Do you need ElasticSearch on this machine ?", "no")
 
     puts "Aye!"
     puts "Worrrrking..."

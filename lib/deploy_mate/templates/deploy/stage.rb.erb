@@ -1,4 +1,4 @@
-server "<%= @ssh_name %>", roles: [:app, :web, :db], :primary => true
+server "<%= @ssh_name %>", roles: [:app, :web<% if @needs_elasticsearch %>, :search<%end %>], :primary => true
 
 set :unicorn_workers, "2"
 set :nginx_server_name, "<%= @host_name %>"
