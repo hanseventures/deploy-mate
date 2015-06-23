@@ -15,9 +15,11 @@ Other stuff taken care of:
 - Automatic updates
 - NTP
 
-You can choose Database:
+You can choose a Database-Engine:
 - MySQL
 - Postgres
+
+The GEM needs a working Amazon AWS-style `ubuntu`-user on the system in order to work properly. It will create one, if needed.
 
 ## Changelog
 * **2015-06-23**: Support creation of working `ubuntu` user. Error out if another user than `ubuntu` is used.
