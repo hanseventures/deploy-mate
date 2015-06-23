@@ -9,6 +9,7 @@ The resulting server will work with this setup:
 - Unicorn Rack App Server (http://unicorn.bogomips.org/)
 - Bluepill Process Monitoring (https://github.com/bluepill-rb/bluepill)
 - RVM as user-install (http://rvm.io)
+- [Optional] ImageMagick (http://www.imagemagick.org)
 
 Other stuff taken care of:
 - Logration
