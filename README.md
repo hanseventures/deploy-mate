@@ -19,6 +19,7 @@ You can choose a Database-Engine:
 - MySQL
 - Postgres
 
+**If you are not using Amazon AWS as a host**
 The GEM needs a working Amazon AWS-style `ubuntu`-user on the system in order to work properly. It will create one, if needed.
 
 ## Changelog
