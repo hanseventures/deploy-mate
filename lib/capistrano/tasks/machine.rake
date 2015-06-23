@@ -19,6 +19,7 @@ namespace :machine do
       invoke "machine:install:bluepill"
       invoke "machine:install:bundler"
       invoke "machine:install:nodejs"
+      invoke "machine:install:elasticsearch"
       invoke "machine:install:imagemagick" if fetch(:imagemagick)
       invoke "machine:install:mysql_dev" if fetch(:db_engine) == "mysql"
       invoke "machine:install:postgres_dev" if fetch(:db_engine) == "postgresql"
@@ -62,6 +63,12 @@ namespace :machine do
         warn "--------------------------------------------------------------------------------------"
         warn "Run 'dpkg-reconfigure -plow unattended-upgrades' to enable automatic security updates!"
         warn "--------------------------------------------------------------------------------------"
+      end
+    end
+
+    task :elasticsearch do
+      on roles(:search) do
+        invoke 'elasticsearch:install'
       end
     end
 
