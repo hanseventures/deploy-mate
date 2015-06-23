@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name                      = "deploy_mate"
-  s.version                   = "0.14"
+  s.version                   = "0.15"
 
   s.authors                   = ["Tim Adler"]
   s.date                      = %q{2015-06-23}
@@ -19,7 +19,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'capistrano-bundler'
   s.add_dependency 'capistrano-rails'
   s.add_dependency 'rake'
-
-  # s.add_development_dependency 'rake', '~> 10.1.0'
 
 end

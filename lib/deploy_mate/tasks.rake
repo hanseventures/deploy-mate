@@ -31,6 +31,8 @@ namespace :deploy_mate do
     config_template("deploy/stage.rb.erb", "config/deploy/#{@stage_name}.rb")
     sleep 1
 
+    puts "You can activate OPTIONAL components e.g. 'whenever' in deploy.rb/Capfile."
+
     puts "Arr, be dun working!"
   end
 

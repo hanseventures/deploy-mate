@@ -12,3 +12,11 @@ set :repo_url, '<%= @repo_url %>'
 set :db_engine, '<%= @db_engine %>'
 
 set :imagemagick, '<%= @needs_imagemagick %>'
+
+# Optionals
+# Uncomment, if needed
+
+# set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+# set :whenever_environment, fetch(:stage)
+# set :whenever_roles, [:cronjobs]
+# before "whenever:update_crontab", 'rvm:hook'
