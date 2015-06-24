@@ -7,14 +7,13 @@ namespace :deploy_mate do
     puts "I'm your DEPLOY_MATE."
     puts "We will setting up your deployment now."
 
-    @ruby_version = ask("[01/12] Ruby-Version (the RVM-way, e.g. ruby-2.2.0)", guess_ruby_version)
-    @app_name = ask("[02/12] App-Name (for nginx, servers, etc.)", guess_app_name)
-    @repo_url = ask("[03/12] Url-Location of git-repo", "git@github.com:hanseventures/#{@app_name}.git")
-    @is_rails = yes_or_no?("[04/12] Is this a RAILS project ?", (rails_present? ? "yes" : "no"))
-    @needs_imagemagick = yes_or_no?("[05/12] Does this project need ImageMagick ?", (needs_imagemagick? ? "yes" : "no"))
-
-    @stage_name = ask("[06/12] Give the first stage a name", "prestage")
-    @ssh_name = ask("[07/12] SSH-Hostname for the server", "#{@app_name}-#{@stage_name}")
+    @ssh_name = ask("[01/12] SSH-Hostname for the server", "#{@app_name}-#{@stage_name}")
+    @ruby_version = ask("[02/12] Ruby-Version (the RVM-way, e.g. ruby-2.2.0)", guess_ruby_version)
+    @app_name = ask("[03/12] App-Name (for nginx, servers, etc.)", guess_app_name)
+    @repo_url = ask("[04/12] Url-Location of git-repo", "git@github.com:hanseventures/#{@app_name}.git")
+    @is_rails = yes_or_no?("[05/12] Is this a RAILS project ?", (rails_present? ? "yes" : "no"))
+    @needs_imagemagick = yes_or_no?("[06/12] Does this project need ImageMagick ?", (needs_imagemagick? ? "yes" : "no"))
+    @stage_name = ask("[07/12] Give the first stage a name", "prestage")
     @branch_name = ask("[08/12] Branch to deploy '#{@stage_name}' from", "dev")
     @host_name = ask("[09/12] Web-URL for '#{@stage_name}'", "#{@stage_name}.#{@app_name}")
     @environment = ask("[10/12] #{@stage_name}'s environment (RACK_ENV/RAILS_ENV)", "#{@stage_name}")
