@@ -4,7 +4,7 @@ namespace :bluepill do
   task :setup do
     on roles(:app) do
       execute "mkdir -p #{shared_path}/config"
-      template "unicorn.pill.erb", "#{shared_path}/config/unicorn.pill"
+      template "application.pill.erb", "#{shared_path}/config/#{fetch(:application)}.pill"
     end
   end
 

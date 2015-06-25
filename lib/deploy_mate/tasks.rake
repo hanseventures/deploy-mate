@@ -7,18 +7,19 @@ namespace :deploy_mate do
     puts "I'm your DEPLOY_MATE."
     puts "We will setting up your deployment now."
 
-    @ssh_name = ask("[01/12] SSH-Hostname for the server", "#{@app_name}-#{@stage_name}")
-    @ruby_version = ask("[02/12] Ruby-Version (the RVM-way, e.g. ruby-2.2.0)", guess_ruby_version)
-    @app_name = ask("[03/12] App-Name (for nginx, servers, etc.)", guess_app_name)
-    @repo_url = ask("[04/12] Url-Location of git-repo", "git@github.com:hanseventures/#{@app_name}.git")
-    @is_rails = yes_or_no?("[05/12] Is this a RAILS project ?", (rails_present? ? "yes" : "no"))
-    @needs_imagemagick = yes_or_no?("[06/12] Does this project need ImageMagick ?", (needs_imagemagick? ? "yes" : "no"))
-    @stage_name = ask("[07/12] Give the first stage a name", "prestage")
-    @branch_name = ask("[08/12] Branch to deploy '#{@stage_name}' from", "dev")
-    @host_name = ask("[09/12] Web-URL for '#{@stage_name}'", "#{@stage_name}.#{@app_name}")
-    @environment = ask("[10/12] #{@stage_name}'s environment (RACK_ENV/RAILS_ENV)", "#{@stage_name}")
-    @db_engine = ask_until("[11/12] What db are you using?", %w( postgresql mysql ), "mysql")
-    @needs_elasticsearch = yes_or_no?("[12/12] Do you need ElasticSearch on this machine ?", "no")
+    @ssh_name = ask("[01/13] SSH-Hostname for the server", "#{@app_name}-#{@stage_name}")
+    @ruby_version = ask("[02/13] Ruby-Version (the RVM-way, e.g. ruby-2.2.0)", guess_ruby_version)
+    @db_engine = ask_until("[03/13] What db are you using?", %w( postgresql mysql ), "mysql")
+    @app_name = ask("[04/13] App-Name (for nginx, servers, etc.)", guess_app_name)
+    @repo_url = ask("[05/13] Url-Location of git-repo", "git@github.com:hanseventures/#{@app_name}.git")
+    @is_rails = yes_or_no?("[06/13] Is this a RAILS project ?", (rails_present? ? "yes" : "no"))
+    @needs_imagemagick = yes_or_no?("[07/13] Does this project need ImageMagick ?", (needs_imagemagick? ? "yes" : "no"))
+    @uses_sidekiq = yes_or_no?("[08/13] Does this project use Sidekiq ?", (uses_sidekiq? ? "yes" : "no"))
+    @stage_name = ask("[09/13] Give the first stage a name", "prestage")
+    @branch_name = ask("[10/13] Branch to deploy '#{@stage_name}' from", "dev")
+    @host_name = ask("[11/13] Web-URL for '#{@stage_name}'", "#{@stage_name}.#{@app_name}")
+    @environment = ask("[12/13] #{@stage_name}'s environment (RACK_ENV/RAILS_ENV)", "#{@stage_name}")
+    @needs_elasticsearch = yes_or_no?("[13/13] Do you need ElasticSearch on this machine ?", "no")
 
     puts "Aye!"
     puts "Worrrrking..."
@@ -43,6 +44,10 @@ def config_template(from, to)
   compiled = ERB.new(erb).result(binding)
   File.open(to, "wb") { |f| f.write(compiled) }
   puts "'#{to}'"
+end
+
+def uses_sidekiq?
+  defined? Sidekiq
 end
 
 def needs_imagemagick?
