@@ -9,3 +9,4 @@ Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
 # Uncomment, if needed
 
 # require "whenever/capistrano"
+# before 'deploy:restart', 'deploy:migrate', 'whenever:update_crontab'

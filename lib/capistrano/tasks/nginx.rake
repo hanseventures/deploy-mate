@@ -14,6 +14,8 @@ namespace :nginx do
         sudo "rm /etc/nginx/sites-enabled/default"
       end
 
+      execute "mkdir -p #{shared_path}/log"
+
       invoke "nginx:enable_site"
       invoke "nginx:reload"
     end
