@@ -166,6 +166,7 @@ namespace :machine do
         unless is_package_installed?("imagemagick")
           apt_get_install("imagemagick")
           apt_get_install("libmagickcore-dev")
+          apt_get_install("libmagickwand-dev")
         end
       end
     end
