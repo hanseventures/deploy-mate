@@ -29,6 +29,7 @@ It uses the following Capistrano-roles to divide the installed components:
 - **cronjobs**: [OPTIONAL] For environments where `whenever` should manage/run cronjobs
 
 ## Changelog
+* **2015-08-06**: Support for optional Sidekiq
 * **2015-06-23**: Support for optional ElasticSearch
 * **2015-06-23**: Support for optional `whenever`
 * **2015-06-23**: Support for optional `imagemagick`
