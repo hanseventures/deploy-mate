@@ -27,9 +27,9 @@ namespace :bluepill do
     on roles(:app) do
       if bluepill_running?
         if pill_running?(:unicorn)
-          execute :rvmsudo, :bluepill, :restart, fetch(:application)
+          execute :rvmsudo, :bluepill, fetch(:application), :restart
         else
-          execute :rvmsudo, :bluepill, :start, fetch(:application)
+          execute :rvmsudo, :bluepill, fetch(:application), :start
         end
       else
         invoke "bluepill:start"
