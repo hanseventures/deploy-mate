@@ -22,6 +22,21 @@ namespace :bluepill do
     end
   end
 
-
+  desc "Restarts/Reloads app gracefully"
+  task :restart do
+    on roles(:app) do
+      if bluepill_running?
+        if pill_running?(:unicorn)
+          execute :rvmsudo, :bluepill, :restart, fetch(:application)
+        else
+          execute :rvmsudo, :bluepill, :start, fetch(:application)
+        end
+      else
+        invoke "bluepill:start"
+        invoke "nginx:reload"
+      end
+    end
+  end
+  before :restart, 'rvm:hook'
 end
 

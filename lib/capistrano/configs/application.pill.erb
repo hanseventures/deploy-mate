@@ -28,12 +28,11 @@ Bluepill.application("<%= fetch(:application) %>", :log_file => "#{shared_path}/
   <% if fetch(:sidekiq) %>
   app.process("sidekiq") do |process|
     process.pid_file = "#{shared_path}/system/pids/sidekiq.pid"
-
-    process.start_command = "/home/ubuntu/.rvm/wrappers/default/bundle exec sidekiq -e <%= fetch(:environment) %> -C #{current_path}/config/sidekiq.yml -i 0 -P #{shared_path}/pids/sidekiq.pid"
-    process.stop_command = "kill -QUIT {{PID}}"
-
-    process.start_grace_time = 10.seconds
-    process.stop_grace_time = 10.seconds
+    process.start_command = "/home/ubuntu/.rvm/wrappers/default/bundle exec sidekiq -e <%= fetch(:environment) %> -P #{process.pid_file} -d -i 0 -L #{shared_path}/log/sidekiq.log -C #{current_path}/config/sidekiq.yml"
+    process.start_grace_time = 30.seconds
+    process.stop_command = "/home/ubuntu/.rvm/wrappers/default/bundle exec sidekiqctl stop #{process.pid_file}"
+    process.stop_grace_time = 15.seconds
+    process.restart_grace_time = 45.seconds
   end
   <% end %>
 

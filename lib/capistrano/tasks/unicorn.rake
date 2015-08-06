@@ -13,21 +13,4 @@ namespace :unicorn do
     end
   end
 
-  desc "Gracefully restarts unicorn"
-  task :phased_restart do
-    on roles(:app) do
-      if bluepill_running?
-        if pill_running?(:unicorn)
-          execute :rvmsudo, :bluepill, :restart, :unicorn
-        else
-          execute :rvmsudo, :bluepill, :start, :unicorn
-        end
-      else
-        invoke "bluepill:start"
-        invoke "nginx:reload"
-      end
-    end
-  end
-  before :phased_restart, 'rvm:hook'
-
 end
