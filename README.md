@@ -29,8 +29,9 @@ It uses the following Capistrano-roles to divide the installed components:
 - **cronjobs**: [OPTIONAL] For environments where `whenever` should manage/run cronjobs
 
 ## Changelog
-* **2015-08-06**: Support for optional Sidekiq
-* **2015-06-23**: Support for optional ElasticSearch
+* **2015-08-07**: Small fix for `rvm`-install
+* **2015-08-06**: Support for optional `sidekiq`
+* **2015-06-23**: Support for optional `elasticsearch`
 * **2015-06-23**: Support for optional `whenever`
 * **2015-06-23**: Support for optional `imagemagick`
 * **2015-06-23**: Support creation of working `ubuntu` user. Error out if another user than `ubuntu` is used.
