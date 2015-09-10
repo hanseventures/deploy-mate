@@ -29,6 +29,7 @@ It uses the following Capistrano-roles to divide the installed components:
 - **cronjobs**: [OPTIONAL] For environments where `whenever` should manage/run cronjobs
 
 ## Changelog
+* **2015-08-27**: Small fix for `nginx`-config regarding gzipping of svgs
 * **2015-08-14**: Important small fix for `nginx`-config regarding ssl
 * **2015-08-07**: Small fix for `rvm`-install
 * **2015-08-06**: Support for optional `sidekiq`
