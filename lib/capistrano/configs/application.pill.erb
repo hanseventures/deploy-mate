@@ -7,7 +7,7 @@ Bluepill.application("<%= fetch(:application) %>", :log_file => "#{shared_path}/
   app.uid = 'ubuntu'
   app.gid = 'www-data'
 
-  <% if fetch(:puma) %>
+  <% if fetch(:app_server) == "puma" %>
   app.process("puma") do |process|
     process.pid_file = "#{shared_path}/system/pids/puma.pid"
     process.environment = { 'BUNDLE_GEMFILE' => "#{current_path}/Gemfile" }
