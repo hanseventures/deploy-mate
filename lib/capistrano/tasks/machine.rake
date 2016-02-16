@@ -49,7 +49,8 @@ namespace :machine do
   desc "Install configs"
   task :setup do
     invoke "nginx:setup"
-    invoke "unicorn:setup"
+    invoke "unicorn:setup" if fetch(:app_server) == "unicorn"
+    invoke "puma:setup" if fetch(:app_server) == "puma"
     invoke "upstart:setup"
     invoke "logrotate:setup"
     invoke "bluepill:setup"

@@ -28,6 +28,6 @@ require "capistrano/helpers.rb"
 end
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
-%w(bluepill logrotate machine elasticsearch nginx rvm unicorn upstart).each do |t|
+%w(bluepill logrotate machine elasticsearch nginx rvm unicorn puma upstart).each do |t|
   import File.expand_path("../tasks/#{t}.rake", __FILE__)
 end

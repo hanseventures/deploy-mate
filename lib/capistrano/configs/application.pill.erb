@@ -7,6 +7,25 @@ Bluepill.application("<%= fetch(:application) %>", :log_file => "#{shared_path}/
   app.uid = 'ubuntu'
   app.gid = 'www-data'
 
+  <% if fetch(:puma) %>
+  app.process("puma") do |process|
+    process.pid_file = "#{shared_path}/system/pids/puma.pid"
+    process.environment = { 'BUNDLE_GEMFILE' => "#{current_path}/Gemfile" }
+
+    process.start_command = "/home/ubuntu/.rvm/wrappers/default/bundle exec puma -C #{shared_path}/config/puma.rb -E <%= fetch(:environment) %> -D"
+    process.stop_command = "kill -QUIT {{PID}}"
+    process.restart_command = "kill -USR2 {{PID}}"
+
+    process.start_grace_time = 10.seconds
+    process.stop_grace_time = 10.seconds
+    process.restart_grace_time = 10.seconds
+
+    process.monitor_children do |child_process|
+      child_process.stop_command = "kill -9 {{PID}}"
+      child_process.checks :mem_usage, :every => 30.seconds, :below => 500.megabytes, :times => [3,4], :fires => :stop
+    end
+  end
+  <% else %>
   app.process("unicorn") do |process|
     process.pid_file = "#{shared_path}/system/pids/unicorn.pid"
     process.environment = { 'BUNDLE_GEMFILE' => "#{current_path}/Gemfile" }
@@ -24,6 +43,7 @@ Bluepill.application("<%= fetch(:application) %>", :log_file => "#{shared_path}/
       child_process.checks :mem_usage, :every => 30.seconds, :below => 500.megabytes, :times => [3,4], :fires => :stop
     end
   end
+  <% end %>
 
   <% if fetch(:sidekiq) %>
   app.process("sidekiq") do |process|
