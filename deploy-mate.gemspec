@@ -1,12 +1,12 @@
 Gem::Specification.new do |s|
   s.name                      = "deploy_mate"
-  s.version                   = "0.17.4"
+  s.version                   = "0.17.5"
 
-  s.authors                   = ["Tim Adler"]
-  s.date                      = %q{2015-06-23}
+  s.authors                   = ["Tim Adler", "Marcus Geißler"]
+  s.date                      = %q{2016-02-17}
   s.description               = %q{This is how we deploy around here.}
   s.summary                   = s.description
-  s.email                     = %q{tim.adler (at) hanseventures (dot) com}
+  s.email                     = %q{development (at) hanseventures (dot) com}
   s.license                   = "MIT"
 
   s.files                     = `git ls-files`.split("\n")

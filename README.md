@@ -4,7 +4,7 @@
 
 This little gem can be added to your ruby-projects in order to **set up a working ruby-server** and **deploy** to it.
 
-The resulting server will work with this setup: 
+The resulting server will work with this setup:
 - NGINX Webserver (http://nginx.org/)
 - Unicorn Rack App Server (http://unicorn.bogomips.org/)
 - Bluepill Process Monitoring (https://github.com/bluepill-rb/bluepill)
@@ -29,6 +29,7 @@ It uses the following Capistrano-roles to divide the installed components:
 - **cronjobs**: [OPTIONAL] For environments where `whenever` should manage/run cronjobs
 
 ## Changelog
+* **2015-10-17**: Added support for puma as application server
 * **2015-10-12**: Support additional linked-directories
 * **2015-08-27**: Small fix for `nginx`-config regarding gzipping of svgs
 * **2015-08-14**: Important small fix for `nginx`-config regarding ssl
