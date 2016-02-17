@@ -15,7 +15,7 @@ namespace :bluepill do
     end
   end
 
-  desc "Stops unicorn"
+  desc "Stops app server"
   task :stop do
     on roles(:app) do
       sudo "stop bluepill"
@@ -26,7 +26,7 @@ namespace :bluepill do
   task :restart do
     on roles(:app) do
       if bluepill_running?
-        if pill_running?(:unicorn)
+        if pill_running?(fetch(:app_server))
           execute :rvmsudo, :bluepill, fetch(:application), :restart
         else
           execute :rvmsudo, :bluepill, fetch(:application), :start
@@ -39,4 +39,3 @@ namespace :bluepill do
   end
   before :restart, 'rvm:hook'
 end
-

@@ -1,5 +1,5 @@
-upstream unicorn_upstream {
-  server unix:<%= shared_path %>/system/sockets/unicorn.sock;
+upstream appserver_upstream {
+  server unix:<%= shared_path %>/system/sockets/<%= fetch(:app_server) %>.sock;
 }
 
 server {
@@ -21,7 +21,7 @@ server {
     proxy_set_header Host $http_host;
     proxy_redirect off;
 
-    proxy_pass http://unicorn_upstream;
+    proxy_pass http://appserver_upstream;
     break;
   }
 

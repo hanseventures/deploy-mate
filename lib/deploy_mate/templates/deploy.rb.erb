@@ -10,6 +10,7 @@ set :stages, %w(<%= @stage_name %>)
 set :default_stage, '<%= @stage_name %>'
 set :repo_url, '<%= @repo_url %>'
 set :db_engine, '<%= @db_engine %>'
+set :app_server, '<%= @app_server %>'
 
 set :imagemagick, <%= @needs_imagemagick %>
 set :sidekiq, <%= @uses_sidekiq %>
