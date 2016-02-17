@@ -17,6 +17,6 @@
                 [ ! -f /var/run/nginx.pid ] || kill -USR1 `cat /var/run/nginx.pid`
         endscript
         lastaction
-                [ ! -f <%= shared_path %>/system/pids/unicorn.pid ] || kill -USR1 `cat <%= shared_path %>/system/pids/unicorn.pid`
+                [ ! -f <%= shared_path %>/system/pids/<%= fetch(:app_server) %>.pid ] || kill -USR1 `cat <%= shared_path %>/system/pids/<%= fetch(:app_server) %>.pid`
         endscript
 }

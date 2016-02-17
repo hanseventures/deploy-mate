@@ -15,7 +15,7 @@ namespace :bluepill do
     end
   end
 
-  desc "Stops appserver"
+  desc "Stops app server"
   task :stop do
     on roles(:app) do
       sudo "stop bluepill"

@@ -19,6 +19,9 @@ set :bundle_flags, "--deployment"
 set :bundle_without, %w{development test}.join(' ')
 set :bundle_exec, "bundle exec"
 
+# app server
+set :app_server, "unicorn" # default to unicorn if nothing set
+
 namespace :deploy do
   desc 'Restart application'
   task :restart do
