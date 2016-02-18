@@ -4,4 +4,4 @@ set :unicorn_workers, "2"
 set :nginx_server_name, "<%= @host_name %>"
 
 set :environment, "<%= @environment %>"
-set :branch, "<%= @branch_name %>"
+set :branch, ENV.fetch("branch", "<%= @branch_name %>")
