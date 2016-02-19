@@ -86,4 +86,4 @@ This will bump you up to the latest repo-version.
 2. Create a working SSH-configuration for that server and try it our using `ssh <your-server-name>`
 3. Run `cap <your-stage> machine:init` to install the needed packages.
 4. Run `cap <your-stage> machine:setup` the setup all needed configuration-files on the server
-5. Run `cap <your-stage> deploy` and be done.
+5. Run `cap <your-stage> deploy branch=optional_branch` and be done.
