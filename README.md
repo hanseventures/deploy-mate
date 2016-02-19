@@ -6,7 +6,7 @@ This little gem can be added to your ruby-projects in order to **set up a workin
 
 The resulting server will work with this setup:
 - NGINX Webserver (http://nginx.org/)
-- Unicorn Rack App Server (http://unicorn.bogomips.org/)
+- Unicorn Rack App Server (http://unicorn.bogomips.org/) / Puma Rack App Server (http://puma.io/)
 - Bluepill Process Monitoring (https://github.com/bluepill-rb/bluepill)
 - RVM as user-install (http://rvm.io)
 - [Optional] ImageMagick (http://www.imagemagick.org)
