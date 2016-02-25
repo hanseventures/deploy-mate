@@ -29,6 +29,7 @@ It uses the following Capistrano-roles to divide the installed components:
 - **cronjobs**: [OPTIONAL] For environments where `whenever` should manage/run cronjobs
 
 ## Changelog
+* **0.18 (2016-02-25)**: Added support for capistrano 3.4, Ask before overwriting existing config-files
 * **2016-02-19**: Made selection of a deployed branch possible
 * **2016-02-17**: Added support for puma as application server
 * **2015-10-12**: Support additional linked-directories
