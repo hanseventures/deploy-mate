@@ -15,10 +15,9 @@ namespace :nginx do
       end
 
       execute "mkdir -p #{shared_path}/log"
-
-      invoke "nginx:enable_site"
-      invoke "nginx:reload"
     end
+    invoke "nginx:enable_site"
+    invoke "nginx:reload"
   end
 
   desc "Enable the app page for nginx"

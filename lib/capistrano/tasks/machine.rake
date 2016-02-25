@@ -6,24 +6,24 @@ namespace :machine do
   task :init do
     on roles(:app) do
       apt_get_update
-      invoke "machine:install:htop"
-      invoke "machine:install:language_pack_de"
-      invoke "machine:install:unattended_upgrades"
-      invoke "machine:install:ntp"
-      invoke "machine:install:git"
-      invoke "machine:install:nginx"
-      invoke "machine:install:fail2ban"
-      invoke "machine:install:rvm"
-      invoke "machine:install:ruby"
-      invoke "machine:install:set_defaults"
-      invoke "machine:install:bluepill"
-      invoke "machine:install:bundler"
-      invoke "machine:install:nodejs"
-      invoke "machine:install:elasticsearch"
-      invoke "machine:install:imagemagick" if fetch(:imagemagick)
-      invoke "machine:install:mysql_dev" if fetch(:db_engine) == "mysql"
-      invoke "machine:install:postgres_dev" if fetch(:db_engine) == "postgresql"
     end
+    invoke "machine:install:htop"
+    invoke "machine:install:language_pack_de"
+    invoke "machine:install:unattended_upgrades"
+    invoke "machine:install:ntp"
+    invoke "machine:install:git"
+    invoke "machine:install:nginx"
+    invoke "machine:install:fail2ban"
+    invoke "machine:install:rvm"
+    invoke "machine:install:ruby"
+    invoke "machine:install:set_defaults"
+    invoke "machine:install:bluepill"
+    invoke "machine:install:bundler"
+    invoke "machine:install:nodejs"
+    invoke "machine:install:elasticsearch"
+    invoke "machine:install:imagemagick" if fetch(:imagemagick)
+    invoke "machine:install:mysql_dev" if fetch(:db_engine) == "mysql"
+    invoke "machine:install:postgres_dev" if fetch(:db_engine) == "postgresql"
   end
   before "machine:init", "machine:check_ubuntu_user"
   before "deploy", "machine:check_ubuntu_user"

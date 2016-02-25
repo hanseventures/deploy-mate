@@ -25,9 +25,7 @@ set :app_server, "unicorn" # default to unicorn if nothing set
 namespace :deploy do
   desc 'Restart application'
   task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      invoke "bluepill:restart"
-    end
+    invoke "bluepill:restart"
   end
 
   desc 'Ensure that the app folder is present'

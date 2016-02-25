@@ -11,19 +11,29 @@ namespace :bluepill do
   desc "Starts bluepill"
   task :start do
     on roles(:app) do
-      sudo "start bluepill"
+      if !bluepill_running?
+        sudo "start bluepill"
+      else
+        info "No need to start bluepill, it is running!"
+      end
     end
   end
 
   desc "Stops app server"
   task :stop do
     on roles(:app) do
-      sudo "stop bluepill"
+      if bluepill_running?
+        sudo "stop bluepill"
+      else
+        "Can't stop bluepill because it's not running!"
+      end
     end
   end
 
   desc "Restarts/Reloads app gracefully"
   task :restart do
+    invoke "bluepill:start"
+
     on roles(:app) do
       if bluepill_running?
         if pill_running?(fetch(:app_server))
@@ -31,11 +41,10 @@ namespace :bluepill do
         else
           execute :rvmsudo, :bluepill, fetch(:application), :start
         end
-      else
-        invoke "bluepill:start"
-        invoke "nginx:reload"
       end
     end
+
+    invoke "nginx:reload"
   end
   before :restart, 'rvm:hook'
 end
