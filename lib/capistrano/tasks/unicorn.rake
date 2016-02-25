@@ -4,12 +4,15 @@ set_default(:unicorn_worker_grace_time, "60")
 
 namespace :unicorn do
   include Bluepill
+  include Shell
 
   desc "Installs the unicorn config"
   task :setup do
     on roles(:app) do
       execute "mkdir -p #{shared_path}/config"
-      template "unicorn.rb.erb", "#{shared_path}/config/unicorn.rb"
+      if file_new_or_overwrite?("#{shared_path}/config/unicorn.rb")
+        template "unicorn.rb.erb", "#{shared_path}/config/unicorn.rb"
+      end
     end
   end
 

@@ -1,10 +1,13 @@
 namespace :bluepill do
+  include Shell
 
   desc "Installs the application pill"
   task :setup do
     on roles(:app) do
       execute "mkdir -p #{shared_path}/config"
-      template "application.pill.erb", "#{shared_path}/config/#{fetch(:application)}.pill"
+      if file_new_or_overwrite?("#{shared_path}/config/#{fetch(:application)}.pill")
+        template "application.pill.erb", "#{shared_path}/config/#{fetch(:application)}.pill"
+      end
     end
   end
 

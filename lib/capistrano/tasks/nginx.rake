@@ -1,16 +1,22 @@
 set_default(:nginx_server_name, "*.*")
 
 namespace :nginx do
+  include Shell
 
   desc "Installs the nginx configs"
   task :setup do
     on roles(:web) do
-      template "nginx_base.conf.erb", "/tmp/nginx_conf"
-      sudo "mv /tmp/nginx_conf /etc/nginx/nginx.conf"
-      template "nginx_app.conf.erb", "/tmp/#{fetch(:application)}_conf"
-      sudo "mv /tmp/#{fetch(:application)}_conf /etc/nginx/sites-available/#{fetch(:application)}.conf"
+      if file_new_or_overwrite?("/etc/nginx/nginx.conf")
+        template "nginx_base.conf.erb", "/tmp/nginx_conf"
+        sudo "mv /tmp/nginx_conf /etc/nginx/nginx.conf"
+      end
 
-      if test("[ -f /etc/nginx/sites-enabled/default ]")
+      if file_new_or_overwrite?("/etc/nginx/sites-available/#{fetch(:application)}.conf")
+        template "nginx_app.conf.erb", "/tmp/#{fetch(:application)}_conf"
+        sudo "mv /tmp/#{fetch(:application)}_conf /etc/nginx/sites-available/#{fetch(:application)}.conf"
+      end
+
+      if file_exists? "/etc/nginx/sites-enabled/default"
         sudo "rm /etc/nginx/sites-enabled/default"
       end
 
@@ -23,7 +29,7 @@ namespace :nginx do
   desc "Enable the app page for nginx"
   task :enable_site do
     on roles(:web) do
-      unless test("[ -f /etc/nginx/sites-enabled/#{fetch(:application)}.conf ]")
+      unless file_exists? "/etc/nginx/sites-enabled/#{fetch(:application)}.conf"
         sudo "ln -sf /etc/nginx/sites-available/#{fetch(:application)}.conf /etc/nginx/sites-enabled/#{fetch(:application)}.conf"
       end
     end

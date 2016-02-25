@@ -23,7 +23,7 @@ require 'capistrano/bundler'
 require "capistrano/helpers.rb"
 
 # Load custom modules with helper functions
-%w(aptitude bluepill upstart user_management).each do |m|
+%w(aptitude bluepill upstart user_management shell).each do |m|
   load File.expand_path("../modules/#{m}.rb", __FILE__)
 end
 
