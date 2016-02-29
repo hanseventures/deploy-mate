@@ -32,17 +32,10 @@ namespace :machine do
   task :check_ubuntu_user do
     on roles(:app) do
       unless am_i?("ubuntu")
-        invoke "machine:create_ubuntu_user"
+        execute_script("create_ubuntu_user.sh") # Creates an Amazon AWS-style 'ubuntu'-user on machines with only 'root'
         error "Please use a use a user named 'ubuntu' to login to the machine."
         fail
       end
-    end
-  end
-
-  desc "Creates an Amazon AWS-style 'ubuntu'-user on machines with only 'root'"
-  task :create_ubuntu_user do
-    on roles(:app) do
-      execute_script("create_ubuntu_user.sh")
     end
   end
 
@@ -68,9 +61,7 @@ namespace :machine do
     end
 
     task :elasticsearch do
-      on roles(:search) do
-        invoke 'elasticsearch:install'
-      end
+      invoke 'elasticsearch:install'
     end
 
     task :language_pack_de do
