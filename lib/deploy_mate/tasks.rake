@@ -7,20 +7,21 @@ namespace :deploy_mate do
     puts "I'm your DEPLOY_MATE."
     puts "We will setting up your deployment now."
 
-    @app_name = ask("[01/14] App-Name (for nginx, servers, etc.)", guess_app_name)
-    @stage_name = ask("[02/14] Give the first stage a name", "prestage")
-    @ssh_name = ask("[03/14] SSH-Hostname for the server", "#{@app_name}-#{@stage_name}")
-    @ruby_version = ask("[04/14] Ruby-Version (the RVM-way, e.g. ruby-2.2.0)", guess_ruby_version)
-    @db_engine = ask_until("[05/14] What db are you using?", %w( postgresql mysql ), "mysql")
-    @app_server = ask_until("[06/14] What app server do you want to use?", %w( unicorn puma ), "unicorn")
-    @repo_url = ask("[07/14] Url-Location of git-repo", "git@github.com:hanseventures/#{@app_name}.git")
-    @is_rails = yes_or_no?("[08/14] Is this a RAILS project ?", (rails_present? ? "yes" : "no"))
-    @needs_imagemagick = yes_or_no?("[09/14] Does this project need ImageMagick ?", (needs_imagemagick? ? "yes" : "no"))
-    @uses_sidekiq = yes_or_no?("[10/14] Does this project use Sidekiq ?", (uses_sidekiq? ? "yes" : "no"))
-    @branch_name = ask("[11/14] Branch to deploy '#{@stage_name}' from", "dev")
-    @host_name = ask("[12/14] Web-URL for '#{@stage_name}'", "#{@stage_name}.#{@app_name}")
-    @environment = ask("[13/14] #{@stage_name}'s environment (RACK_ENV/RAILS_ENV)", "#{@stage_name}")
-    @needs_elasticsearch = yes_or_no?("[14/14] Do you need ElasticSearch on this machine ?", "no")
+    @app_name = ask("[01/15] App-Name (for nginx, servers, etc.)", guess_app_name)
+    @stage_name = ask("[02/15] Give the first stage a name", "prestage")
+    @ssh_name = ask("[03/15] SSH-Hostname for the server", "#{@app_name}-#{@stage_name}")
+    @ruby_version = ask("[04/15] Ruby-Version (the RVM-way, e.g. ruby-2.2.0)", guess_ruby_version)
+    @db_engine = ask_until("[05/15] What db are you using?", %w( postgresql mysql ), "mysql")
+    @app_server = ask_until("[06/15] What app server do you want to use?", %w( unicorn puma ), "unicorn")
+    @repo_url = ask("[07/15] Url-Location of git-repo", "git@github.com:hanseventures/#{@app_name}.git")
+    @is_rails = yes_or_no?("[08/15] Is this a RAILS project ?", (rails_present? ? "yes" : "no"))
+    @needs_imagemagick = yes_or_no?("[09/15] Does this project need ImageMagick ?", (needs_imagemagick? ? "yes" : "no"))
+    @uses_sidekiq = yes_or_no?("[10/15] Does this project use Sidekiq ?", (uses_sidekiq? ? "yes" : "no"))
+    @branch_name = ask("[11/15] Branch to deploy '#{@stage_name}' from", "dev")
+    @host_name = ask("[12/15] Web-URL for '#{@stage_name}'", "#{@stage_name}.#{@app_name}")
+    @environment = ask("[13/15] #{@stage_name}'s environment (RACK_ENV/RAILS_ENV)", "#{@stage_name}")
+    @needs_elasticsearch = yes_or_no?("[14/15] Do you need ElasticSearch on this machine ?", "no")
+    @needs_memcached = yes_or_no?("[15/15] Do you need Memcached on this machine ?", (needs_memcached? ? "yes" : "no"))
 
     puts "Aye!"
     puts "Worrrrking..."
@@ -53,6 +54,10 @@ end
 
 def needs_imagemagick?
   defined? RMagick || defined? MiniMagick
+end
+
+def needs_memcached?
+  defined? Dalli
 end
 
 def rails_present?
