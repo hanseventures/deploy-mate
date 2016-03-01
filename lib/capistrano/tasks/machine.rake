@@ -22,6 +22,7 @@ namespace :machine do
     invoke "machine:install:nodejs"
     invoke "machine:install:elasticsearch"
     invoke "machine:install:imagemagick" if fetch(:imagemagick)
+    invoke "machine:install:memcached" if fetch(:memcached)
     invoke "machine:install:mysql_dev" if fetch(:db_engine) == "mysql"
     invoke "machine:install:postgres_dev" if fetch(:db_engine) == "postgresql"
   end
@@ -101,6 +102,12 @@ namespace :machine do
     task :imagemagick do
       on roles(:app) do
         apt_get_install("imagemagick") unless is_package_installed?("imagemagick")
+      end
+    end
+
+    task :memcached do
+      on roles(:app) do
+        apt_get_install("memcached") unless is_package_installed?("memcached")
       end
     end
 
