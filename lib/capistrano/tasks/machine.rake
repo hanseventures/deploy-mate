@@ -47,6 +47,7 @@ namespace :machine do
     invoke "puma:setup" if fetch(:app_server) == "puma"
     invoke "upstart:setup"
     invoke "logrotate:setup"
+    invoke "fail2ban:setup"
     invoke "bluepill:setup"
   end
   before :setup, "deploy:ensure_folder"
