@@ -29,6 +29,7 @@ It uses the following Capistrano-roles to divide the installed components:
 - **cronjobs**: [OPTIONAL] For environments where `whenever` should manage/run cronjobs
 
 ## Changelog
+* **0.18.2 (2016-03-08)**: Added basic DDoS and flooding-proof via nginx `req_limit` and `fail2ban`
 * **0.18.1 (2016-03-01)**: Added support for memcached
 * **0.18 (2016-02-25)**: Added support for capistrano 3.4, Ask before overwriting existing config-files
 * **2016-02-19**: Made selection of a deployed branch possible
