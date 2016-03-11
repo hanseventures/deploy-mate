@@ -140,9 +140,10 @@ namespace :machine do
     task :ntp do
       on roles(:app) do
         apt_get_install("ntp") unless is_package_installed?("ntp")
-        warn "--------------------------------------------------------------------------------------"
-        warn "Run 'dpkg-reconfigure tzdata' to configure the timezone!"
-        warn "--------------------------------------------------------------------------------------"
+        sudo "chmod 666 /etc/timezone"
+        execute 'echo "Europe/Berlin" > /etc/timezone'
+        sudo "chmod 644 /etc/timezone"
+        sudo "dpkg-reconfigure -f noninteractive tzdata"
       end
     end
 
