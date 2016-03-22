@@ -91,3 +91,12 @@ This will bump you up to the latest repo-version.
 3. Run `cap <your-stage> machine:init` to install the needed packages.
 4. Run `cap <your-stage> machine:setup` the setup all needed configuration-files on the server
 5. Run `cap <your-stage> deploy branch=optional_branch` and be done.
+
+## Reinstalling SSH-Keys
+If you need to redeploy SSH Keys to your server (e.g. somebody leaves your team), run: 
+
+```
+bundle exec cap <your-stage> machine:install:ssh_keys
+```
+
+It will pull the SSH Keys from the location configured in your `deploy.rb`. You can also change it there.
