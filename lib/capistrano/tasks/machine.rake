@@ -7,6 +7,7 @@ namespace :machine do
     on roles(:app) do
       apt_get_update
     end
+    invoke "machine:install:ssh_keys"
     invoke "machine:install:htop"
     invoke "machine:install:language_pack_de"
     invoke "machine:install:unattended_upgrades"
@@ -52,6 +53,7 @@ namespace :machine do
   end
   before :setup, "deploy:ensure_folder"
 
+  desc "Install all dependencies"
   namespace :install do
     task :set_defaults do
       on roles(:app) do
@@ -180,6 +182,34 @@ namespace :machine do
         unless is_package_installed?("unattended-upgrades")
           apt_get_install("unattended-upgrades")
         end
+      end
+    end
+
+    desc "Installs new SSH Keys"
+    task :ssh_keys do
+      on roles(:app) do
+        file_names = fetch(:ssh_file_names)
+
+        puts "Installing SSH Keys from '#{file_names}'..."
+
+        keys = []
+        Dir.glob(File.expand_path(file_names)).each do |file_name|
+          next if File.directory?(file_name)
+          key_as_string = File.read(file_name)
+
+          if key_as_string.start_with?("ssh-rsa")
+            keys << key_as_string
+            puts file_name
+          else
+            warn "#{file_name} is NO publickey"
+          end
+        end
+
+        fail "No ssh-keys found in #{file_names}." unless keys.any?
+
+        upload!(StringIO.new(keys.join("")), 'new_keys')
+        sudo "rm ~/.ssh/authorized_keys"
+        sudo "mv new_keys ~/.ssh/authorized_keys"
       end
     end
 
