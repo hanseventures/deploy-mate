@@ -16,7 +16,7 @@ set :imagemagick, <%= @needs_imagemagick %>
 set :memcached, <%= @needs_memcached %>
 set :sidekiq, <%= @uses_sidekiq %>
 
-set :ssh_file_names, '<%= @ssh_file_names %>'
+set :ssh_file_names, ['<%= @ssh_file_names %>']
 
 # Optionals
 # Uncomment, if needed

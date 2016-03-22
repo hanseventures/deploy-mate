@@ -188,24 +188,26 @@ namespace :machine do
     desc "Installs new SSH Keys"
     task :ssh_keys do
       on roles(:app) do
-        file_names = fetch(:ssh_file_names)
+        file_patterns = fetch(:ssh_file_names)
 
-        puts "Installing SSH Keys from '#{file_names}'..."
+        puts "Installing SSH Keys from #{file_patterns.join(',')}..."
 
         keys = []
-        Dir.glob(File.expand_path(file_names)).each do |file_name|
-          next if File.directory?(file_name)
-          key_as_string = File.read(file_name)
+        file_patterns.each do |file_pattern|
+          Dir.glob(File.expand_path(file_pattern)).each do |file_name|
+            next if File.directory?(file_name)
+            key_as_string = File.read(file_name)
 
-          if key_as_string.start_with?("ssh-rsa")
-            keys << key_as_string
-            puts file_name
-          else
-            warn "#{file_name} is NO publickey"
+            if key_as_string.start_with?("ssh-rsa")
+              keys << key_as_string
+              puts file_name
+            else
+              warn "#{file_name} is NO publickey"
+            end
           end
         end
 
-        fail "No ssh-keys found in #{file_names}." unless keys.any?
+        fail "No ssh-keys found in #{file_patterns.join(',')}." unless keys.any?
 
         upload!(StringIO.new(keys.join("")), 'new_keys')
         sudo "rm ~/.ssh/authorized_keys"
