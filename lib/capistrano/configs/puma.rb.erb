@@ -16,7 +16,7 @@ end
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum, this matches the default thread size of Active Record.
 #
-threads_count = <%= ENV.fetch("PUMA_THREADS", fetch(:puma_threads)) %>
+threads_count = ENV.fetch("PUMA_THREADS", <%= fetch(:puma_threads) %>)
 threads threads_count, threads_count
 
 # Specifies the `environment` that Puma will run in.
@@ -29,7 +29,7 @@ environment environment_name
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
 #
-workers <%= ENV.fetch("PUMA_WORKERS", fetch(:puma_workers)) %>
+workers ENV.fetch("PUMA_WORKERS", <%= fetch(:puma_workers) %>)
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
