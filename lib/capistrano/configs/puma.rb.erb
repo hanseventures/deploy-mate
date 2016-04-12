@@ -5,7 +5,8 @@ environment_name = "<%= fetch(:environment) %>"
 
 begin
   require 'dotenv'
-  Dotenv.load("#{shared_path}/.env.#{environment_name}")
+  dotenv_path = '<%= fetch(:dotenv_path, shared_path.join(".env.#{fetch(:environment)}")) %>'
+  Dotenv.load(dotenv_path)
 rescue LoadError
   puts "Dotenv not found, skipping load of env vars..."
 end
