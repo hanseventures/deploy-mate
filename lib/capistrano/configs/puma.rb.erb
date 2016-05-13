@@ -1,6 +1,15 @@
 # puma configuration
 
 shared_path = "<%= shared_path %>"
+environment_name = "<%= fetch(:environment) %>"
+
+begin
+  require 'dotenv'
+  dotenv_path = '<%= fetch(:dotenv_path, shared_path.join(".env.#{fetch(:environment)}")) %>'
+  Dotenv.load(dotenv_path)
+rescue LoadError
+  puts "Dotenv not found, skipping load of env vars..."
+end
 
 # Puma can serve each request in a thread from an internal thread pool.
 # The `threads` method setting takes two numbers a minimum and maximum.
@@ -8,12 +17,12 @@ shared_path = "<%= shared_path %>"
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum, this matches the default thread size of Active Record.
 #
-threads_count = <%= fetch(:puma_threads) %>
+threads_count = ENV.fetch("PUMA_THREADS", <%= fetch(:puma_threads) %>)
 threads threads_count, threads_count
 
 # Specifies the `environment` that Puma will run in.
 #
-environment "<%= fetch(:environment) %>"
+environment environment_name
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
@@ -21,7 +30,7 @@ environment "<%= fetch(:environment) %>"
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
 #
-workers <%= fetch(:puma_workers) %>
+workers ENV.fetch("PUMA_WORKERS", <%= fetch(:puma_workers) %>)
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
