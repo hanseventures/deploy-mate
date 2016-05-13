@@ -58,7 +58,7 @@ and run `bundle install`.
 
 After installing the gem you need to generate the files needed to be able to deploy with **capistrano**.
 
-Add this at **the end** of your project's `Rakefile`:
+If your are not running Rails, then add this at **the end** of your project's `Rakefile`:
 ```
 load 'deploy_mate/tasks.rake'
 ```
@@ -93,7 +93,7 @@ This will bump you up to the latest repo-version.
 5. Run `cap <your-stage> deploy branch=optional_branch` and be done.
 
 ## Reinstalling SSH-Keys
-If you need to redeploy SSH Keys to your server (e.g. somebody leaves your team), run: 
+If you need to redeploy SSH Keys to your server (e.g. somebody leaves your team), run:
 
 ```
 bundle exec cap <your-stage> machine:install:ssh_keys
