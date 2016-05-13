@@ -10,7 +10,7 @@ namespace :deploy_mate do
     @app_name =             ask("[01/16] App-Name (for nginx, servers, etc.)", guess_app_name)
     @stage_name =           ask("[02/16] Give the first stage a name", "prestage")
     @ssh_name =             ask("[03/16] SSH-Hostname for the server", "#{@app_name}-#{@stage_name}")
-    @ssh_file_names =       ask("[04/16] SSH Keys to be installed", "~/.ssh/*.pub")
+    @ssh_file_names =       ask("[04/16] SSH Keys to be installed (can be left empty)", "~/.ssh/*.pub")
     @ruby_version =         ask("[05/16] Ruby-Version (the RVM-way, e.g. ruby-2.2.0)", guess_ruby_version)
     @db_engine =            ask_until("[06/16] What db are you using?", %w( postgresql mysql ), "mysql")
     @app_server =           ask_until("[07/16] What app server do you want to use?", %w( unicorn puma ), "unicorn")
