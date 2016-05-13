@@ -2,7 +2,9 @@
 # This file is loaded before the tasks
 
 def template(from, to)
-  erb = File.read(File.expand_path("../configs/#{from}", __FILE__))
+  path = File.expand_path("lib/capistrano/configs/#{from}", ENV['PWD'])
+  path = File.expand_path("../configs/#{from}", __FILE__) unless File.exists?(path)
+  erb = File.read(path)
   compiled = ERB.new(erb).result(binding)
   io = StringIO.new(compiled)
   upload! io, to
