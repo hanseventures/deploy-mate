@@ -1,0 +1,79 @@
+# This file represents your application deployment configuration and
+# will be used to generate the capistrano deployment and server setup.
+# Please go through this file and when you are ready execute:
+#
+#   bundle exec rake deploy_mate:install
+
+---
+
+  # Name of the application, which is usually the same as the
+  # repository name.
+  app_name: <%= @app_name %>
+
+  # For which stage should the server-setup/deployment be generated. It is
+  # recommended to start with a prestage system and afterwards configure
+  # the production system when it is ready.
+  stage_name: prestage
+
+  # Which is the ssh shortcut to connect to the server. It should be configured
+  # in your ~/.ssh/config. You should be able to connect to the server using:
+  #
+  #   ssh specified_ssh_name
+  #
+  ssh_name: prestage-server
+
+  # Since you are able to connect to the server with the specified ssh shortcurt,
+  # usually more persons should be able to access it. You can specify a list of
+  # public ssh keys which will be copied to the ~/.ssh/authorized_keys file on the
+  # server. If the list is empty, the current key setting will be left untouched on
+  # the server.
+  ssh_file_names:
+    - "~/.ssh/*.pub"
+
+  # The ruby version, that will be installed and used on the server. It is used
+  # by RVM and must have a compatible syntax like '2.3.0' or 'ruby-2.3.0'.
+  ruby_version: <%= @ruby_version %>
+
+  # Currently there are two database engines supported: 'postgresql' and 'mysql'
+  db_engine: postgresql
+
+  # Currently there are two appservers supported: 'unicorn' and 'puma'.
+  # Remember to add the chosen appserver to your Gemfile if you are not
+  # already using it locally.
+  app_server: unicorn
+
+  # The url of your GIT repository.
+  repo_url: "git@github.com:your-github-name/<%= @app_name %>.git"
+
+  # Are your running a rails application?
+  # Possible values 'yes' or 'no'.
+  rails: <%= @rails %>
+
+  # Are you depending on imagemagick for image manipulation (E.g. paperclip gem)?
+  # Possible values 'yes' or 'no'.
+  imagemagick: <%= @imagemagick %>
+
+  # Are you depending on sidekiq (E.g. as active job backend)?
+  # Possible values 'yes' or 'no'.
+  sidekiq: <%= @sidekiq %>
+
+  # Which GIT branch should be deployed to the defined server by default?
+  # You can overrule this value by providing a branch on the deployment command:
+  #
+  #   bundle exec cap prestage deploy branch=feature/xyz
+  branch_name: dev
+
+  # Under which URL should your server be available? An IP address does the job
+  # too
+  host_name: example.com
+
+  # Under which rails environment will the application run.
+  environment: prestage
+
+  # Are you depending on elastic search?
+  # Possible values 'yes' or 'no'.
+  elasticsearch: no
+
+  # Are you depending on memcached for example as a cache store?
+  # Possible values 'yes' or 'no'.
+  memcached: <%= @memcached %>
