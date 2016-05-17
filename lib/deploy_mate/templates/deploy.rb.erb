@@ -16,6 +16,7 @@ set :imagemagick, <%= @needs_imagemagick %>
 set :memcached, <%= @needs_memcached %>
 set :sidekiq, <%= @uses_sidekiq %>
 
+# Place a list of ssh key file paths or regular expressions e.g.: "~/.ssh/*.pub"
 set :ssh_file_names, ['<%= @ssh_file_names %>']
 
 # Optionals
