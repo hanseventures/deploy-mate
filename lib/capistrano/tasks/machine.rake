@@ -190,7 +190,7 @@ namespace :machine do
       on roles(:app) do
         file_patterns = fetch(:ssh_file_names)
 
-        next puts("Skip SSH key installation") if file_patterns == ['']
+        next puts("Skip SSH key installation") if file_patterns == []
 
         puts "Installing SSH Keys from #{file_patterns.join(',')}..."
 
