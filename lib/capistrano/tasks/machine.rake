@@ -10,7 +10,7 @@ namespace :machine do
     invoke "machine:install:ssh_keys"
     invoke "machine:install:htop"
     invoke "machine:install:language_pack_de"
-    invoke "machine:install:unattended_upgrades"
+    invoke "machine:install:cron_apt"
     invoke "machine:install:ntp"
     invoke "machine:install:git"
     invoke "machine:install:nginx"
@@ -58,9 +58,6 @@ namespace :machine do
     task :set_defaults do
       on roles(:app) do
         execute_script("set_defaults.sh", fetch(:rvm_ruby_version))
-        warn "--------------------------------------------------------------------------------------"
-        warn "Run 'dpkg-reconfigure -plow unattended-upgrades' to enable automatic security updates!"
-        warn "--------------------------------------------------------------------------------------"
       end
     end
 
@@ -177,11 +174,17 @@ namespace :machine do
       end
     end
 
-    task :unattended_upgrades do
+    task :cron_apt do
       on roles(:app) do
-        unless is_package_installed?("unattended-upgrades")
-          apt_get_install("unattended-upgrades")
-        end
+        apt_get_install("cron-apt") unless is_package_installed?("cron-apt")
+
+        template "security_sources_list.erb", "/tmp/security_sources_list"
+        sudo "mv /tmp/security_sources_list /etc/apt/security.sources.list"
+        sudo "chmod 644 /etc/apt/security.sources.list"
+
+        template "security_upgrades.erb", "/tmp/security_upgrades"
+        sudo "mv /tmp/security_upgrades /etc/cron-apt/action.d/5-security"
+        sudo "chmod 644 /etc/cron-apt/action.d/5-security"
       end
     end
 
