@@ -100,3 +100,6 @@ bundle exec cap <your-stage> machine:install:ssh_keys
 ```
 
 It will pull the SSH Keys from the location configured in your `deploy.rb`. You can also change it there.
+
+## Overwriting Templates
+You can overwrite the templates used to setup the server. Just place the desired template in your project under `lib/capistrano/configs` and rerun the setup task. All existing templates can be found in this repo under [lib/capistrano/configs](https://github.com/hanseventures/deploy-mate/tree/master/lib/capistrano/configs).
