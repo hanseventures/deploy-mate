@@ -19,5 +19,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'capistrano-bundler'
   s.add_dependency 'capistrano-rails'
   s.add_dependency 'rake'
-
 end

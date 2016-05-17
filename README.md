@@ -28,75 +28,47 @@ It uses the following Capistrano-roles to divide the installed components:
 - **search**: [OPTIONAL] Machines with this role run ElasticSearch
 - **cronjobs**: [OPTIONAL] For environments where `whenever` should manage/run cronjobs
 
-## Changelog
-* **0.18.4 (2016-03-22)**: Added mandatory task to install `ssh_key`s
-* **0.18.2 (2016-03-08)**: Added basic DDoS and flooding-proof via nginx `req_limit` and `fail2ban`
-* **0.18.1 (2016-03-01)**: Added support for memcached
-* **0.18 (2016-02-25)**: Added support for capistrano 3.4, Ask before overwriting existing config-files
-* **2016-02-19**: Made selection of a deployed branch possible
-* **2016-02-17**: Added support for puma as application server
-* **2015-10-12**: Support additional linked-directories
-* **2015-08-27**: Small fix for `nginx`-config regarding gzipping of svgs
-* **2015-08-14**: Important small fix for `nginx`-config regarding ssl
-* **2015-08-07**: Small fix for `rvm`-install
-* **2015-08-06**: Support for optional `sidekiq`
-* **2015-06-23**: Support for optional `elasticsearch`
-* **2015-06-23**: Support for optional `whenever`
-* **2015-06-23**: Support for optional `imagemagick`
-* **2015-06-23**: Support creation of working `ubuntu` user. Error out if another user than `ubuntu` is used.
-* **2015-06-22**: Support for choosing your Ruby-version when creating the `Capfile`. Suggestions come from `.ruby-version` and `Gemfile`.
-* **2015-04-29**: Load custom rake tasks from lib/capistrano/tasks directory.
-You need to run the generator ```rake deploy_mate:install``` again or add ```Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }``` to your Capfile.
-
 ## Installation
-Add this to your project's `Gemfile`:
+* Add the gem to your Gemfile (`gem 'deploy_mate'`) and run `bundle install`.
+* Spawn yourself a basic **Ubuntu 14** at the provider of your choice.
+* Create a working SSH-configuration for that server and try it out using `ssh <your-server-name>`.
 
-```
-gem 'deploy_mate'
-```
-and run `bundle install`.
+## Generate the Capistrano files
+* Generate the configuration file: `bundle exec rake deploy_mate:default_config`
+* Edit the configuration file: `open config/deploy_mate.yml`
+* Generate the Capistrano files out of the config: `bundle exec rake deploy_mate:install`
 
-After installing the gem you need to generate the files needed to be able to deploy with **capistrano**.
-
-If your are not running Rails, then add this at **the end** of your project's `Rakefile`:
+**NOTE** for non-rails applications:
+Since rails supports auto-loading rake tasks, any non-rails application must load the deploy mate rake tasks manually.
+At **the end** of the your project's `Rakefile`:
 ```
 load 'deploy_mate/tasks.rake'
 ```
-then run
-```
-rake deploy_mate:install
-````
-
-Follow the instructions.
-
-This will create the following files for you:
-
-```
-Capfile
-config/deploy.rb
-config/deploy/<your-stage>.rb
-```
 When done: **Remove** `load 'deploy_mate/tasks.rake'` from your `Rakefile`. It is not needed anymore and will otherwise only cause problems.
 
-## Updating the gem
-Should you need to update your `deploy_mate`-version (e.g. because somebody fixed a bug in the gem), run:
-```
-bundle update deploy_mate
-```
-This will bump you up to the latest repo-version.
+## Using deploy mate
 
-## Setting up a server
-1. Spawn yourself a basic **Ubuntu 14** at the provider of your choice.
-2. Create a working SSH-configuration for that server and try it our using `ssh <your-server-name>`
-3. Run `cap <your-stage> machine:init` to install the needed packages.
-4. Run `cap <your-stage> machine:setup` the setup all needed configuration-files on the server
-5. Run `cap <your-stage> deploy branch=optional_branch` and be done.
+### Initialize needed server packages
+```
+bundle exec cap <your-stage> machine:init
+```
 
-## Reinstalling SSH-Keys
-If you need to redeploy SSH Keys to your server (e.g. somebody leaves your team), run:
+### Copy needed templates
+```
+bundle exec cap <your-stage> machine:setup
+```
+
+### Deploy the application
+```
+bundle exec cap <your-stage> deploy
+```
+
+### Reinstalling SSH-Keys
+If you need to redeploy SSH Keys to your server (e.g. somebody leaves your team),you can
+always come back to your configuration file at `config/deploy_mate.yml`, change the
+values and generate the Capistrano files again with `bundle exec rake deploy_mate:install`.
+To setup just the ssh keys run:
 
 ```
 bundle exec cap <your-stage> machine:install:ssh_keys
 ```
-
-It will pull the SSH Keys from the location configured in your `deploy.rb`. You can also change it there.

@@ -1,22 +1,23 @@
 # NOTE: copy this file to /config/deploy.rb
-set :application, '<%= @app_name %>'
+set :application, '<%= @config['app_name'] %>'
 
 require "capistrano/deploy_mate_defaults"
 
-set :rvm_ruby_version, '<%= @ruby_version %>'
+set :rvm_ruby_version, '<%= @config['ruby_version'] %>'
 
 # Set app specific vars
-set :stages, %w(<%= @stage_name %>)
-set :default_stage, '<%= @stage_name %>'
-set :repo_url, '<%= @repo_url %>'
-set :db_engine, '<%= @db_engine %>'
-set :app_server, '<%= @app_server %>'
+set :stages, %w(<%= @config['stage_name'] %>)
+set :default_stage, '<%= @config['stage_name'] %>'
+set :repo_url, '<%= @config['repo_url'] %>'
+set :db_engine, '<%= @config['db_engine'] %>'
+set :app_server, '<%= @config['app_server'] %>'
 
-set :imagemagick, <%= @needs_imagemagick %>
-set :memcached, <%= @needs_memcached %>
-set :sidekiq, <%= @uses_sidekiq %>
+set :imagemagick, <%= @config['imagemagick'] %>
+set :memcached, <%= @config['memcached'] %>
+set :sidekiq, <%= @config['sidekiq'] %>
 
-set :ssh_file_names, ['<%= @ssh_file_names %>']
+# Place a list of ssh key file paths or regular expressions e.g.: "~/.ssh/*.pub"
+set :ssh_file_names, [<%= @config['ssh_file_names'].to_a.map { |file| "'#{file}'" }.join(', ') %>]
 
 # Optionals
 # Uncomment, if needed
