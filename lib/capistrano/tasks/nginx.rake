@@ -6,15 +6,11 @@ namespace :nginx do
   desc "Installs the nginx configs"
   task :setup do
     on roles(:web) do
-      if file_new_or_overwrite?("/etc/nginx/nginx.conf")
-        template "nginx_base.conf.erb", "/tmp/nginx_conf"
-        sudo "mv /tmp/nginx_conf /etc/nginx/nginx.conf"
-      end
+      template "nginx_base.conf.erb", "/tmp/nginx_conf"
+      sudo "mv /tmp/nginx_conf /etc/nginx/nginx.conf"
 
-      if file_new_or_overwrite?("/etc/nginx/sites-available/#{fetch(:application)}.conf")
-        template "nginx_app.conf.erb", "/tmp/#{fetch(:application)}_conf"
-        sudo "mv /tmp/#{fetch(:application)}_conf /etc/nginx/sites-available/#{fetch(:application)}.conf"
-      end
+      template "nginx_app.conf.erb", "/tmp/#{fetch(:application)}_conf"
+      sudo "mv /tmp/#{fetch(:application)}_conf /etc/nginx/sites-available/#{fetch(:application)}.conf"
 
       if file_exists? "/etc/nginx/sites-enabled/default"
         sudo "rm /etc/nginx/sites-enabled/default"

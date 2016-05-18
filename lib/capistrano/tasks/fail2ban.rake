@@ -4,14 +4,10 @@ namespace :fail2ban do
   desc "Installs the fail2ban configs"
   task :setup do
     on roles(:web) do
-      if file_new_or_overwrite?("/etc/fail2ban/jail.conf")
-        template "fail2ban-nginx-request-limit-jail.conf.erb", "/tmp/fail2ban_jail"
-        sudo "mv /tmp/fail2ban_jail /etc/fail2ban/jail.conf"
-      end
-      if file_new_or_overwrite?("/etc/fail2ban/filter.d/nginx-req-limit.conf")
-        template "fail2ban-nginx-request-limit-jail.conf.erb", "/tmp/fail2ban_req_filter"
-        sudo "mv /tmp/fail2ban_req_filter /etc/fail2ban/filter.d/nginx-req-limit.conf"
-      end
+      template "fail2ban-nginx-request-limit-jail.conf.erb", "/tmp/fail2ban_jail"
+      sudo "mv /tmp/fail2ban_jail /etc/fail2ban/jail.conf"
+      template "fail2ban-nginx-request-limit-jail.conf.erb", "/tmp/fail2ban_req_filter"
+      sudo "mv /tmp/fail2ban_req_filter /etc/fail2ban/filter.d/nginx-req-limit.conf"
     end
   end
 

@@ -10,9 +10,7 @@ namespace :unicorn do
   task :setup do
     on roles(:app) do
       execute "mkdir -p #{shared_path}/config"
-      if file_new_or_overwrite?("#{shared_path}/config/unicorn.rb")
-        template "unicorn.rb.erb", "#{shared_path}/config/unicorn.rb"
-      end
+      template "unicorn.rb.erb", "#{shared_path}/config/unicorn.rb"
     end
   end
 

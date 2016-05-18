@@ -6,20 +6,16 @@ namespace :upstart do
   desc "Install the upstart config"
   task :setup do
     on roles(:app) do
-      if file_new_or_overwrite?("/etc/init/bluepill.conf")
-        template "upstart.conf.erb", "/tmp/bluepill.conf"
-        sudo "mv /tmp/bluepill.conf /etc/init/"
-      end
+      template "upstart.conf.erb", "/tmp/bluepill.conf"
+      sudo "mv /tmp/bluepill.conf /etc/init/"
       sudo "chown root:root /etc/init/bluepill.conf"
     end
   end
 
   task :start do
     on roles(:app) do
-      if file_new_or_overwrite?("/etc/init/bluepill.conf")
-        template "upstart.conf.erb", "/tmp/bluepill.conf"
-        sudo "mv /tmp/bluepill.conf /etc/init/"
-      end
+      template "upstart.conf.erb", "/tmp/bluepill.conf"
+      sudo "mv /tmp/bluepill.conf /etc/init/"
       sudo "chown root:root /etc/init/bluepill.conf"
     end
   end

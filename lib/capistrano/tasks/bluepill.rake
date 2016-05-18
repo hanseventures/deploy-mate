@@ -5,9 +5,7 @@ namespace :bluepill do
   task :setup do
     on roles(:app) do
       execute "mkdir -p #{shared_path}/config"
-      if file_new_or_overwrite?("#{shared_path}/config/#{fetch(:application)}.pill")
-        template "application.pill.erb", "#{shared_path}/config/#{fetch(:application)}.pill"
-      end
+      template "application.pill.erb", "#{shared_path}/config/#{fetch(:application)}.pill"
     end
   end
 
