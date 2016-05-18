@@ -23,5 +23,4 @@ namespace :upstart do
       sudo "chown root:root /etc/init/bluepill.conf"
     end
   end
-
 end

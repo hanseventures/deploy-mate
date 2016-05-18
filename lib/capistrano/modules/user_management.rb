@@ -1,5 +1,4 @@
 module UserManagement
-
   def whoami
     capture(:whoami)
   end
@@ -7,5 +6,4 @@ module UserManagement
   def am_i?(user_name)
     whoami == user_name
   end
-
 end

@@ -77,5 +77,4 @@ namespace :nginx do
   end
 
   after "nginx:setup", "nginx:reload"
-
 end

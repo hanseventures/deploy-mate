@@ -6,17 +6,17 @@ set :group, "www-data"
 
 set :pty, true
 set :rvm_ruby_version, "ruby-2.2.0"
-set :rvm_map_bins, %w{gem rake ruby rvmsudo bundle}
+set :rvm_map_bins, %w(gem rake ruby rvmsudo bundle)
 
 set :deploy_to, "/srv/#{fetch(:application)}"
-set :linked_dirs, fetch(:linked_dirs, []).push(*%w{log vendor/bundle system/pids system/sockets public/assets})
+set :linked_dirs, fetch(:linked_dirs, []).push(*%w(log vendor/bundle system/pids system/sockets public/assets))
 
 set :keep_releases, 3
-set :ssh_options, { forward_agent: true }
+set :ssh_options, forward_agent: true
 
 # bundler config
 set :bundle_flags, "--deployment"
-set :bundle_without, %w{development test}.join(' ')
+set :bundle_without, %w(development test).join(' ')
 set :bundle_exec, "bundle exec"
 
 # app server

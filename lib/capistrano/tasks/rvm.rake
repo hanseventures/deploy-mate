@@ -1,5 +1,5 @@
-RVM_SYSTEM_PATH = "/usr/local/rvm"
-RVM_USER_PATH = "~/.rvm"
+RVM_SYSTEM_PATH = "/usr/local/rvm".freeze
+RVM_USER_PATH = "~/.rvm".freeze
 
 namespace :rvm do
   desc "Prints the RVM and Ruby version on the target host"
@@ -19,19 +19,19 @@ namespace :rvm do
     on roles(fetch(:rvm_roles, :all)) do
       rvm_path = fetch(:rvm_custom_path)
       rvm_path ||= case fetch(:rvm_type)
-      when :auto
-        if test("[ -d #{RVM_USER_PATH} ]")
-          RVM_USER_PATH
-        elsif test("[ -d #{RVM_SYSTEM_PATH} ]")
-          RVM_SYSTEM_PATH
-        else
-          RVM_USER_PATH
-        end
-      when :system, :mixed
-        RVM_SYSTEM_PATH
-      else # :user
-        RVM_USER_PATH
-      end
+                   when :auto
+                     if test("[ -d #{RVM_USER_PATH} ]")
+                       RVM_USER_PATH
+                     elsif test("[ -d #{RVM_SYSTEM_PATH} ]")
+                       RVM_SYSTEM_PATH
+                     else
+                       RVM_USER_PATH
+                     end
+                   when :system, :mixed
+                     RVM_SYSTEM_PATH
+                   else # :user
+                     RVM_USER_PATH
+                   end
 
       set :rvm_path, rvm_path
     end
@@ -49,7 +49,7 @@ before :deploy, 'rvm:hook'
 
 namespace :load do
   task :defaults do
-    set :rvm_map_bins, %w{gem rake ruby bundle}
+    set :rvm_map_bins, %w(gem rake ruby bundle)
     set :rvm_type, :auto
     set :rvm_ruby_version, "default"
   end

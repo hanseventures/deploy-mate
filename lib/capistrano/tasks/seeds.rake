@@ -1,5 +1,4 @@
 namespace :seeds do
-
   desc "Reload seeds from scratch"
   task :reload do
     on roles(:app) do
@@ -11,6 +10,4 @@ namespace :seeds do
       end
     end
   end
-
 end
-
