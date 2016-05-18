@@ -16,7 +16,7 @@ namespace :deploy_mate do
   task :install do
     @config = YAML.load_file(File.expand_path('config/deploy_mate.yml', ENV['PWD']))
     puts "Creating capistrano deployment files:\n"
-    FileUtils.mkdir_p("config/deploy") unless File.exists?("config/deploy")
+    FileUtils.mkdir_p("config/deploy") unless File.exist?("config/deploy")
     puts config_template("Capfile.erb", "Capfile")
     puts config_template("deploy.rb.erb", "config/deploy.rb")
     puts config_template("deploy/stage.rb.erb", "config/deploy/#{@config['stage_name']}.rb")
@@ -51,16 +51,13 @@ def guess_app_name
 end
 
 def guess_ruby_version
-  ruby_version = nil
   ruby_version = cat_file(".ruby-version")
   ruby_version.strip! if ruby_version
   unless ruby_version
     gem_file_content = cat_file("Gemfile")
     if gem_file_content
-      match =  gem_file_content.match("^ruby '(?<version>[0-9.]*)'")
-      if match
-        ruby_version = "ruby-" + match["version"]
-      end
+      match = gem_file_content.match("^ruby '(?<version>[0-9.]*)'")
+      ruby_version = "ruby-" + match["version"] if match
     end
   end
   ruby_version
@@ -71,5 +68,5 @@ def to_h(value)
 end
 
 def cat_file(filename)
-  File.open(filename, "rb") { |f| f.read } if File.exist?(filename)
+  File.open(filename, "rb", &:read) if File.exist?(filename)
 end

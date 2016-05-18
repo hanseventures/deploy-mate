@@ -16,5 +16,4 @@ namespace :puma do
       end
     end
   end
-
 end

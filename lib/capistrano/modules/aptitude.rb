@@ -1,5 +1,4 @@
 module Aptitude
-
   def apt_get_update
     sudo "apt-get -y update"
   end
@@ -12,8 +11,7 @@ module Aptitude
     sudo "sudo apt-get -y autoremove #{package_name}"
   end
 
-  def is_package_installed?(package_name)
-    !(/(Installed: \(none\)|Unable to locate package)/.match(capture("apt-cache policy #{package_name}")))
+  def package_installed?(package_name)
+    !/(Installed: \(none\)|Unable to locate package)/.match(capture("apt-cache policy #{package_name}"))
   end
-
 end

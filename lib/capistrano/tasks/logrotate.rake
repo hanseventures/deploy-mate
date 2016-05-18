@@ -11,5 +11,4 @@ namespace :logrotate do
       sudo "chown root:root /etc/logrotate.d/#{fetch(:application)}"
     end
   end
-
 end
