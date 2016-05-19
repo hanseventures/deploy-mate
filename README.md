@@ -2,7 +2,7 @@
 <img src="http://hanseventures.s3.amazonaws.com/github/pirate-redbeard_1024.png" width="300" />
 > T'arrust me, bucko. I can do it.
 
-[![Build Status](https://travis-ci.org/hanseventures/deploy-mate.png?branch=feature/rubocop)](https://travis-ci.org/hanseventures/deploy-mate)
+[![Build Status](https://travis-ci.org/johanness/deploy-mate.png?branch=feature/rubocop)](https://travis-ci.org/johanness/deploy-mate)
 
 This little gem can be added to your ruby-projects in order to **set up a working ruby-server** and **deploy** to it.
 
