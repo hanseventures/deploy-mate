@@ -11,9 +11,7 @@ namespace :puma do
   task :setup do
     on roles(:app) do
       execute "mkdir -p #{shared_path}/config"
-      if file_new_or_overwrite?("#{shared_path}/config/puma.rb")
-        template "puma.rb.erb", "#{shared_path}/config/puma.rb"
-      end
+      template "puma.rb.erb", "#{shared_path}/config/puma.rb"
     end
   end
 end
