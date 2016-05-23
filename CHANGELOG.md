@@ -1,3 +1,4 @@
+* **0.25 (2016-05-23)**: Support multiple stages in YAML-file.
 * **0.2 (2016-05-18)**: Configuration moved to YAML-file. SSH-Keys optional. Config-templates overwritable locally.
 * **0.18.4 (2016-03-22)**: Added mandatory task to install `ssh_key`s
 * **0.18.2 (2016-03-08)**: Added basic DDoS and flooding-proof via nginx `req_limit` and `fail2ban`
