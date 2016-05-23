@@ -7,6 +7,7 @@ namespace :deploy_mate do
     @imagemagick  = to_h(imagemagick?)
     @sidekiq      = to_h(sidekiq?)
     @memcached    = to_h(memcached?)
+    @stages       = %w(prestage production)
 
     puts "Creating default template:\n\n"
     puts "\t" + config_template('deploy_mate.yml.erb', 'config/deploy_mate.yml')
@@ -15,11 +16,16 @@ namespace :deploy_mate do
 
   task :install do
     @config = YAML.load_file(File.expand_path('config/deploy_mate.yml', ENV['PWD']))
+
     puts "Creating capistrano deployment files:\n"
     FileUtils.mkdir_p("config/deploy") unless File.exist?("config/deploy")
     puts config_template("Capfile.erb", "Capfile")
     puts config_template("deploy.rb.erb", "config/deploy.rb")
-    puts config_template("deploy/stage.rb.erb", "config/deploy/#{@config['stage_name']}.rb")
+
+    @config['stages'].each do |stage_config|
+      @stage_config = stage_config
+      puts config_template("deploy/stage.rb.erb", "config/deploy/#{@stage_config['stage_name']}.rb")
+    end
   end
 end
 

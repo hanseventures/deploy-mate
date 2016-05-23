@@ -1,7 +1,7 @@
-server "<%= @config['ssh_name'] %>", roles: [:app, :db, :web<% if @config['elasticsearch'] %>, :search<% end %>], :primary => true
+server "<%= @stage_config['ssh_name'] %>", roles: [:app, :db, :web<% if @config['elasticsearch'] %>, :search<% end %>], :primary => true
 
 set :unicorn_workers, "2"
-set :nginx_server_name, "<%= @config['host_name'] %>"
+set :nginx_server_name, "<%= @stage_config['host_name'] %>"
 
-set :environment, "<%= @config['environment'] %>"
-set :branch, ENV.fetch("branch", "<%= @config['branch_name'] %>")
+set :environment, "<%= @stage_config['environment'] %>"
+set :branch, ENV.fetch("branch", "<%= @stage_config['branch_name'] %>")

@@ -13,40 +13,44 @@
   # The url of your GIT repository.
   repo_url: "git@github.com:your-github-name/<%= @app_name %>.git"
 
-  # For which stage should the server-setup/deployment be generated. It is
-  # recommended to start with a prestage system and afterwards configure
-  # the production system when it is ready.
-  stage_name: prestage
 
-  # Under which rails environment will the application run.
-  environment: prestage
+  # The following lists the configs for every stage that a deployment will
+  # be generated for
+  stages:
+  <% @stages.each do |stage| %>
+      # Name of the stage
+    - stage_name: <%= stage %>
 
-  # Which GIT branch should be deployed to the defined server by default?
-  # You can overrule this value by providing a branch on the deployment command:
-  #
-  #   bundle exec cap prestage deploy branch=feature/xyz
-  branch_name: dev
+      # Under which rails environment will the application run on <%= stage %>.
+      environment: <%= stage %>
 
-  # Which is the ssh shortcut to connect to the server. It should be configured
-  # in your ~/.ssh/config. You should be able to connect to the server using:
-  #
-  #   ssh specified_ssh_name
-  #
-  ssh_name: prestage-server
+      # Which GIT branch should be deployed to <%= stage %> by default?
+      # You can overrule this value by providing a branch on the deployment command:
+      #
+      #   bundle exec cap <%= stage %> deploy branch=feature/xyz
+      branch_name: <%= (stage == 'production' ? 'master' : 'dev') %>
 
-  # Since you are able to connect to the server with the specified ssh shortcurt,
-  # usually more persons should be able to access it. You can specify a list of
+      # Which is the ssh shortcut to connect to the <%= stage %>-server. It should be configured
+      # in your ~/.ssh/config. You should be able to connect to the server using:
+      #
+      #   ssh specified_ssh_name
+      #
+      ssh_name: <%= stage %>-server
+
+      # Under which URL should your server be available? An IP address does the job
+      # too
+      host_name: example.com
+  <% end %>
+
+  # Since you are able to connect to your with the specified ssh shortcurt,
+  # usually more persons should be able to access them. You can specify a list of
   # public ssh keys which will be copied to the ~/.ssh/authorized_keys file on the
   # server. If the list is empty, the current key setting will be left untouched on
   # the server.
   ssh_file_names:
     - "~/.ssh/*.pub"
 
-  # Under which URL should your server be available? An IP address does the job
-  # too
-  host_name: example.com
-
-  # The ruby version, that will be installed and used on the server. It is used
+  # The ruby version, that will be installed and used on the servers. It is used
   # by RVM and must have a compatible syntax like '2.3.0' or 'ruby-2.3.0'.
   ruby_version: <%= @ruby_version %>
 
