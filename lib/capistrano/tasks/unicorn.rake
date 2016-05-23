@@ -13,5 +13,4 @@ namespace :unicorn do
       template "unicorn.rb.erb", "#{shared_path}/config/unicorn.rb"
     end
   end
-
 end

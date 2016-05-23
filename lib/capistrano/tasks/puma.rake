@@ -14,5 +14,4 @@ namespace :puma do
       template "puma.rb.erb", "#{shared_path}/config/puma.rb"
     end
   end
-
 end

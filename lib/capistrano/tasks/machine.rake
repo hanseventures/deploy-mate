@@ -36,7 +36,7 @@ namespace :machine do
       unless am_i?("ubuntu")
         execute_script("create_ubuntu_user.sh") # Creates an Amazon AWS-style 'ubuntu'-user on machines with only 'root'
         error "Please use a use a user named 'ubuntu' to login to the machine."
-        fail
+        raise
       end
     end
   end
@@ -70,7 +70,7 @@ namespace :machine do
 
     task :language_pack_de do
       on roles(:app) do
-        apt_get_install("language-pack-de") unless is_package_installed?("language-pack-de")
+        apt_get_install("language-pack-de") unless package_installed?("language-pack-de")
       end
     end
 
@@ -104,44 +104,44 @@ namespace :machine do
 
     task :imagemagick do
       on roles(:app) do
-        apt_get_install("imagemagick") unless is_package_installed?("imagemagick")
+        apt_get_install("imagemagick") unless package_installed?("imagemagick")
       end
     end
 
     task :memcached do
       on roles(:app) do
-        apt_get_install("memcached") unless is_package_installed?("memcached")
+        apt_get_install("memcached") unless package_installed?("memcached")
       end
     end
 
     task :mysql_dev do
       on roles(:app) do
-        apt_get_install("libmysqlclient-dev") unless is_package_installed?("libmysqlclient-dev")
+        apt_get_install("libmysqlclient-dev") unless package_installed?("libmysqlclient-dev")
       end
     end
 
     task :postgres_dev do
       on roles(:app) do
-        apt_get_install("libpq-dev") unless is_package_installed?("libpq-dev")
-        apt_get_install("postgresql-client") unless is_package_installed?("postgresql-client")
+        apt_get_install("libpq-dev") unless package_installed?("libpq-dev")
+        apt_get_install("postgresql-client") unless package_installed?("postgresql-client")
       end
     end
 
     task :htop do
       on roles(:app) do
-        apt_get_install("htop") unless is_package_installed?("htop")
+        apt_get_install("htop") unless package_installed?("htop")
       end
     end
 
     task :nodejs do
       on roles(:app) do
-        apt_get_install("nodejs") unless is_package_installed?("nodejs")
+        apt_get_install("nodejs") unless package_installed?("nodejs")
       end
     end
 
     task :ntp do
       on roles(:app) do
-        apt_get_install("ntp") unless is_package_installed?("ntp")
+        apt_get_install("ntp") unless package_installed?("ntp")
         sudo "chmod 666 /etc/timezone"
         execute 'echo "Europe/Berlin" > /etc/timezone'
         sudo "chmod 644 /etc/timezone"
@@ -151,25 +151,25 @@ namespace :machine do
 
     task :git do
       on roles(:app) do
-        apt_get_install("git") unless is_package_installed?("git")
+        apt_get_install("git") unless package_installed?("git")
       end
     end
 
     task :nginx do
       on roles(:app) do
-        apt_get_install("nginx") unless is_package_installed?("nginx")
+        apt_get_install("nginx") unless package_installed?("nginx")
       end
     end
 
     task :fail2ban do
       on roles(:app) do
-        apt_get_install("fail2ban") unless is_package_installed?("fail2ban")
+        apt_get_install("fail2ban") unless package_installed?("fail2ban")
       end
     end
 
     task :imagemagick do
       on roles(:app) do
-        unless is_package_installed?("imagemagick")
+        unless package_installed?("imagemagick")
           apt_get_install("imagemagick")
           apt_get_install("libmagickcore-dev")
           apt_get_install("libmagickwand-dev")
@@ -179,7 +179,7 @@ namespace :machine do
 
     task :unattended_upgrades do
       on roles(:app) do
-        unless is_package_installed?("unattended-upgrades")
+        unless package_installed?("unattended-upgrades")
           apt_get_install("unattended-upgrades")
         end
       end
@@ -209,7 +209,7 @@ namespace :machine do
           end
         end
 
-        fail "No ssh-keys found in #{file_patterns.join(',')}." unless keys.any?
+        raise "No ssh-keys found in #{file_patterns.join(',')}." unless keys.any?
 
         upload!(StringIO.new(keys.join("")), 'new_keys')
         sudo "rm ~/.ssh/authorized_keys"
@@ -224,5 +224,4 @@ namespace :machine do
     end
     before "machine:install:rvm", "machine:install:update_rvm_key"
   end
-
 end
