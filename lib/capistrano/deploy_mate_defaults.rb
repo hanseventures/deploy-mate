@@ -1,5 +1,5 @@
 # This file contains default values for all projects
-set :log_level, :info
+set :log_level, fetch(:log_level, :info)
 
 set :user, "ubuntu"
 set :group, "www-data"
