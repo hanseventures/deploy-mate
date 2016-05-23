@@ -6,8 +6,7 @@ require "capistrano/deploy_mate_defaults"
 set :rvm_ruby_version, '<%= @config['ruby_version'] %>'
 
 # Set app specific vars
-set :stages, %w(<%= @config['stage_name'] %>)
-set :default_stage, '<%= @config['stage_name'] %>'
+set :default_stage, '<%= @config['stages'][0]['stage_name'] %>'
 set :repo_url, '<%= @config['repo_url'] %>'
 set :db_engine, '<%= @config['db_engine'] %>'
 set :app_server, '<%= @config['app_server'] %>'
