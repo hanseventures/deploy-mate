@@ -1,4 +1,4 @@
-# The sturdy d'ploy-mate [![Build Status](https://travis-ci.org/johanness/deploy-mate.svg?branch=master)](https://travis-ci.org/johanness/deploy-mate) [![Code Climate](https://codeclimate.com/github/johanness/deploy-mate/badges/gpa.svg)](https://codeclimate.com/github/johanness/deploy-mate)
+# The sturdy d'ploy-mate [![Build Status](https://travis-ci.org/hanseventures/deploy-mate.svg?branch=master)](https://travis-ci.org/hanseventures/deploy-mate) [![Code Climate](https://codeclimate.com/repos/57440ed420a311008900761d/badges/68688d96d13732d3ef41/gpa.svg)](https://codeclimate.com/repos/57440ed420a311008900761d/feed)
 <img src="http://hanseventures.s3.amazonaws.com/github/pirate-redbeard_1024.png" width="300" />
 > T'arrust me, bucko. I can do it.
 
