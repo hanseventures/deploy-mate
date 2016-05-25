@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name                      = "deploy_mate"
-  s.version                   = "0.25"
+  s.version                   = "0.26"
 
   s.authors                   = ["Tim Adler", "Marcus Geißler", "Johannes Strampe"]
-  s.date                      = '2016-05-23'
+  s.date                      = '2016-05-25'
   s.description               = 'This is how we deploy around here.'
   s.summary                   = s.description
   s.email                     = 'development (at) hanseventures (dot) com'

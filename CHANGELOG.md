@@ -1,3 +1,4 @@
+* **0.26 (2016-05-25)**: Swapped `unattended-upgrades` for `cron-apt` to remove manual labor
 * **0.25 (2016-05-23)**: Support multiple stages in YAML-file.
 * **0.2 (2016-05-18)**: Configuration moved to YAML-file. SSH-Keys optional. Config-templates overwritable locally.
 * **0.18.4 (2016-03-22)**: Added mandatory task to install `ssh_key`s
