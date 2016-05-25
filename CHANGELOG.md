@@ -1,3 +1,4 @@
+* **0.26.1 (2016-05-25)**: Bugfix
 * **0.26 (2016-05-25)**: Swapped `unattended-upgrades` for `cron-apt` to remove manual labor
 * **0.25 (2016-05-23)**: Support multiple stages in YAML-file.
 * **0.2 (2016-05-18)**: Configuration moved to YAML-file. SSH-Keys optional. Config-templates overwritable locally.

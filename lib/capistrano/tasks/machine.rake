@@ -176,7 +176,7 @@ namespace :machine do
 
     task :cron_apt do
       on roles(:app) do
-        apt_get_install("cron-apt") unless is_package_installed?("cron-apt")
+        apt_get_install("cron-apt") unless package_installed?("cron-apt")
 
         template "security_sources_list.erb", "/tmp/security_sources_list"
         sudo "mv /tmp/security_sources_list /etc/apt/security.sources.list"
