@@ -102,6 +102,7 @@ namespace :machine do
     task :imagemagick do
       on roles(:app) do
         apt_get_install("imagemagick") unless package_installed?("imagemagick")
+        apt_get_install("libmagickwand-dev") unless package_installed?("libmagickwand-dev")
       end
     end
 
