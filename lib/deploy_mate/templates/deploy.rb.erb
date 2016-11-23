@@ -15,7 +15,7 @@ set :imagemagick, <%= @config['imagemagick'] %>
 set :memcached, <%= @config['memcached'] %>
 set :sidekiq, <%= @config['sidekiq'] %>
 
-set :ssh_file_names, [<%= @config['ssh_file_names'].to_a.map { |file| "'#{file}'" }.join(', ') %>]
+set :ssh_file_names, [<%= @config['ssh_file_names'].to_a.map { |file| "\"#{file}\"" }.join(', ') %>]
 
 # Optionals
 # Uncomment, if needed
